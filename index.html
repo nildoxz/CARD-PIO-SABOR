@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encomenda Online - SABOR AÇAÍTERIA</title>
+    <title>Pedido Online - SABOR AÇAÍTERIA</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
@@ -16,73 +16,63 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        .bg-gradient-custom {
-            background-image: linear-gradient(to top right, #4f008a, #a100ff);
-        }
-        /* Custom Scrollbar for modals (WebKit/Safari compatible) */
+        /* Custom Scrollbar for dark mode modals */
         .modal-body::-webkit-scrollbar {
             width: 8px;
         }
         .modal-body::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #1f2937; /* gray-800 */
             border-radius: 10px;
         }
         .modal-body::-webkit-scrollbar-thumb {
-            background: #c084fc; /* purple-400 */
+            background: #581c87; /* purple-900 */
             border-radius: 10px;
         }
         .modal-body::-webkit-scrollbar-thumb:hover {
-            background: #a855f7; /* purple-500 */
+            background: #6b21a8; /* purple-800 */
         }
-        /* Hide number input arrows for a cleaner look (WebKit/Safari compatible) */
+        /* Hide number input arrows for a cleaner look */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
         input[type=number] {
-            -moz-appearance: textfield; /* Firefox */
+            -moz-appearance: textfield;
         }
         /* Style for disabled checkboxes to make limits clear */
         input[type="checkbox"]:disabled + span {
-            color: #9ca3af; /* gray-400 */
+            color: #6b7280; /* gray-500 */
             cursor: not-allowed;
         }
-        /* Custom alert modal with transitions for Safari */
+        /* Custom alert modal */
         .alert-modal {
-            -webkit-transition: opacity 0.3s ease-in-out;
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
-        .alert-modal > div {
-             -webkit-transition: -webkit-transform 0.3s ease-in-out;
-             transition: transform 0.3s ease-in-out;
-        }
-        /* Added Safari compatibility for transform properties */
-        .hover\:scale-110:hover {
-            -webkit-transform: scale(1.1);
-            transform: scale(1.1);
-        }
-        .scale-95 {
-            -webkit-transform: scale(.95);
-            transform: scale(.95);
+        /* Custom radio button style for dark mode */
+        input[type="radio"]:checked + div > .radio-title {
+            color: #c084fc; /* purple-400 */
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-900 text-gray-300">
 
     <div class="container mx-auto p-4 sm:p-8 max-w-4xl">
 
         <!-- Header Section -->
-        <header class="text-center mb-8 p-6 rounded-2xl bg-gradient-custom text-white shadow-lg">
-            <h1 class="text-5xl md:text-6xl font-black tracking-tight">SABOR AÇAÍTERIA</h1>
-            <p class="text-lg md:text-xl mt-2 opacity-90">Crie a sua encomenda online de forma fácil e rápida!</p>
+        <header class="text-center mb-8 p-6 rounded-2xl bg-gradient-to-tr from-black to-gray-800 text-white shadow-lg">
+            <h1 class="text-5xl md:text-6xl font-black tracking-tight text-amber-400">SABOR AÇAÍTERIA</h1>
+            <p class="text-lg md:text-xl mt-2 text-gray-300 opacity-90">Monte seu pedido online de forma fácil e rápida!</p>
+            <p class="text-md md:text-lg mt-3 text-gray-300 opacity-90 bg-white/10 rounded-full px-4 py-1 inline-block">
+                <i class="fas fa-clock mr-2"></i>Horário: 14:30 às 22:15
+            </p>
         </header>
 
         <main class="space-y-8">
 
             <!-- Products Section -->
-            <section id="tamanhos" class="bg-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-3xl font-bold text-purple-800 mb-4 border-b-2 border-purple-200 pb-2">Escolha o Tamanho</h2>
+            <section id="tamanhos" class="bg-gray-800 p-6 rounded-2xl shadow-md">
+                <h2 class="text-3xl font-bold text-purple-400 mb-4 border-b-2 border-purple-800 pb-2">Escolha o Tamanho</h2>
                 <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <!-- Products will be dynamically injected by JavaScript -->
                 </div>
@@ -91,12 +81,28 @@
         </main>
 
         <!-- Footer -->
-        <footer class="text-center mt-10">
-            <p class="text-gray-600 mt-2">Siga-nos no Instagram: 
-                <a href="#" class="font-semibold text-purple-700 hover:underline">@sabor_acaiteria</a>
+        <footer class="text-center mt-10 space-y-4">
+            <div class="bg-gray-800 p-4 rounded-2xl shadow-md border-2 border-gray-700">
+                 <h3 class="text-lg font-bold text-purple-400 mb-2 flex items-center justify-center gap-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Nosso Endereço
+                </h3>
+                 <p class="text-gray-300 text-base">
+                    Av. Rio Branco, Bairro Novo Horizonte, prox a praça
+                </p>
+            </div>
+            <p class="text-gray-400 pt-2">Siga-nos no Instagram: 
+                <a href="#" class="font-semibold text-purple-400 hover:underline">@sabor_acaiteria</a>
             </p>
         </footer>
     </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5594992816973" target="_blank" class="fixed bottom-5 left-5 z-50">
+        <button class="bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-110">
+            <i class="fab fa-whatsapp text-3xl"></i>
+        </button>
+    </a>
 
     <!-- Floating Cart Button -->
     <div id="cart-button" class="fixed bottom-5 right-5 z-50 hidden">
@@ -107,112 +113,156 @@
     </div>
 
     <!-- Item Customization Modal -->
-    <div id="item-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h3 id="modal-title" class="text-2xl font-bold text-purple-800">Crie o seu Açaí</h3>
-                <button onclick="closeItemModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+    <div id="item-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
+        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 id="modal-title" class="text-2xl font-bold text-purple-400">Monte seu Açaí</h3>
+                <button onclick="closeItemModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div id="modal-body" class="p-6 space-y-6 overflow-y-auto modal-body">
                 <!-- Toppings will be dynamically injected by JavaScript -->
             </div>
-            <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
+            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-between items-center">
                 <div>
-                    <span class="text-lg font-medium text-gray-700">Total do Artigo:</span>
-                    <span id="modal-item-total" class="text-2xl font-bold text-purple-700 ml-2">0,00 €</span>
+                    <span class="text-lg font-medium text-gray-300">Total do Item:</span>
+                    <span id="modal-item-total" class="text-2xl font-bold text-purple-400 ml-2">R$ 0,00</span>
                 </div>
                 <button id="add-to-cart-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center gap-2">
-                    <i class="fas fa-cart-plus"></i> Adicionar ao Cesto
+                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Cart and Checkout Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-purple-800">O seu Cesto e Encomenda</h3>
-                <button onclick="toggleCartModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
+         <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-purple-400">Seu Carrinho e Pedido</h3>
+                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div class="p-6 space-y-6 overflow-y-auto modal-body">
                 <div id="cart-items-container">
                     <!-- Cart items will be dynamically injected here -->
                 </div>
-                <div id="checkout-form" class="space-y-4 pt-6 border-t hidden">
-                    <h4 class="text-xl font-bold text-gray-800 mb-4">Informações para a Entrega</h4>
+                
+                <div id="cart-summary-details" class="pt-4 mt-4 border-t border-gray-700 space-y-2 hidden">
+                     <div class="flex justify-between text-gray-400">
+                         <span>Subtotal</span>
+                         <span id="cart-subtotal">R$ 0,00</span>
+                     </div>
+                     <div class="flex justify-between text-gray-400">
+                         <span>Taxa de Entrega</span>
+                         <span id="cart-delivery-fee">R$ 0,00</span>
+                     </div>
+                </div>
+
+                <div id="checkout-form" class="space-y-4 pt-6 border-t border-gray-700 hidden">
+                    <h4 class="text-xl font-bold text-gray-200">Informações do Pedido</h4>
                     
-                    <div class="bg-purple-50 border-2 border-purple-200 p-4 rounded-lg">
-                        <label for="customer-address" class="flex items-center gap-2 text-base font-bold text-purple-800">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Morada Completa para a Entrega
-                        </label>
-                        <p class="text-xs text-gray-500 mb-2 ml-6">Rua, Número, Freguesia, Ponto de Referência</p>
-                        <input type="text" id="customer-address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 text-base p-2" required>
+                    <!-- Delivery/Takeout Options -->
+                    <div id="delivery-options">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <label class="flex-1 flex items-center p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                                <input type="radio" name="delivery_option" value="delivery" class="hidden" checked>
+                                <div class="flex items-center">
+                                    <span class="mr-3"><i class="fas fa-motorcycle text-xl text-purple-400"></i></span>
+                                    <div>
+                                        <span class="font-semibold text-gray-300 block radio-title">Delivery (Entrega)</span>
+                                        <span class="text-sm text-gray-500">20-60 min</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="flex-1 flex items-center p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                                <input type="radio" name="delivery_option" value="takeout" class="hidden">
+                                <div class="flex items-center">
+                                    <span class="mr-3"><i class="fas fa-store text-xl text-purple-400"></i></span>
+                                    <div>
+                                        <span class="font-semibold text-gray-300 block radio-title">Retirar na Loja</span>
+                                        <span class="text-sm text-gray-500">20-30 min</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
                     <div>
-                        <label for="customer-name" class="block text-sm font-medium text-gray-700">O seu Nome</label>
-                        <input type="text" id="customer-name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" required>
+                        <label for="customer-name" class="block text-sm font-medium text-gray-400">Seu Nome</label>
+                        <input type="text" id="customer-name" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" required>
                     </div>
+                    
+                    <div id="delivery-fields" class="space-y-4">
+                         <div>
+                            <label for="neighborhood" class="block text-sm font-medium text-gray-400">Selecione o Bairro</label>
+                            <select id="neighborhood" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base">
+                                <option value="" data-fee="0">-- Escolha uma opção --</option>
+                                <option value="Jardim Europa" data-fee="7.00">Jardim Europa (R$ 7,00)</option>
+                                <option value="Amec" data-fee="7.00">Amec (R$ 7,00)</option>
+                                <option value="Vale dos Sonhos 1 e 2" data-fee="8.00">Vale dos Sonhos 1 e 2 (R$ 8,00)</option>
+                                <option value="Jardim do Lago" data-fee="8.00">Jardim do Lago (R$ 8,00)</option>
+                                <option value="Casas Populares" data-fee="9.00">Casas Populares (R$ 9,00)</option>
+                                <option value="Nova Esperança 2" data-fee="9.00">Nova Esperança 2 (R$ 9,00)</option>
+                                <option value="Outro Bairro" data-fee="6.00">Outro Bairro (Taxa Padrão R$ 6,00)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="customer-address" class="block text-sm font-medium text-gray-400">Endereço Completo (Rua, Número, Complemento)</label>
+                            <input type="text" id="customer-address" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" placeholder="Ex: Rua das Flores, 123, apt 4" required>
+                        </div>
+                    </div>
+
                      <div>
-                        <label for="payment-method" class="block text-sm font-medium text-gray-700">Método de Pagamento</label>
-                        <select id="payment-method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500">
-                            <option>MB Way</option>
+                        <label for="payment-method" class="block text-sm font-medium text-gray-400">Forma de Pagamento</label>
+                        <select id="payment-method" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base">
+                            <option>Pix</option>
                             <option>Cartão de Crédito (na entrega)</option>
                             <option>Cartão de Débito (na entrega)</option>
-                            <option>Numerário</option>
+                            <option>Dinheiro</option>
                         </select>
-                        <p class="mt-2 text-sm text-center text-red-600 font-bold bg-red-100 p-2 rounded-lg">Atenção: Não aceitamos vales de refeição.</p>
+                        <p class="text-xs text-yellow-400 mt-2"><i class="fas fa-info-circle mr-1"></i>Observação: não aceitamos VR e vales refeição no momento.</p>
                     </div>
                      <div>
-                        <label for="observations" class="block text-sm font-medium text-gray-700">Observações</label>
-                        <textarea id="observations" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500" placeholder="Ex: Troco para 50€, sem cebola, etc."></textarea>
+                        <label for="observations" class="block text-sm font-medium text-gray-400">Observações</label>
+                        <textarea id="observations" rows="3" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" placeholder="Ex: Troco para R$50, sem cebola, etc."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="p-4 bg-gray-50 border-t flex flex-col items-end">
-                <div id="cart-summary-details" class="w-full text-right mb-2 pr-1 hidden">
-                    <p class="text-sm text-gray-600">Subtotal: <span id="cart-subtotal">0,00 €</span></p>
-                    <p class="text-sm text-gray-600">Taxa de Entrega: <span id="cart-delivery-fee">0,00 €</span></p>
+            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-between items-center">
+                 <div>
+                    <span class="text-lg font-medium text-gray-300">Total do Pedido:</span>
+                    <span id="cart-total" class="text-2xl font-bold text-purple-400 ml-2">R$ 0,00</span>
                 </div>
-                <div class="flex justify-between items-center w-full">
-                    <div>
-                        <span class="text-lg font-medium text-gray-700">Total da Encomenda:</span>
-                        <span id="cart-total" class="text-2xl font-bold text-purple-700 ml-2">0,00 €</span>
-                    </div>
-                    <button onclick="finalizeOrder()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2">
-                        <i class="fab fa-whatsapp"></i> Finalizar Encomenda
-                    </button>
-                </div>
+                <button onclick="finalizeOrder()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i> Finalizar Pedido
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg text-center p-8">
+        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-lg text-center p-8">
             <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
-            <h3 class="text-2xl font-bold text-gray-800 mb-2">Encomenda Recebida!</h3>
-            <p class="text-gray-600 mb-6">O seu resumo está pronto. Clique no botão para enviar via WhatsApp e concluir a sua encomenda!</p>
-            <div id="order-summary" class="text-left bg-gray-100 p-4 rounded-lg mb-6 max-h-60 overflow-y-auto modal-body">
+            <h3 class="text-2xl font-bold text-gray-100 mb-2">Pedido Recebido!</h3>
+            <p class="text-gray-400 mb-6">Seu resumo está pronto. Clique no botão para enviar via WhatsApp e concluir seu pedido!</p>
+            <div id="order-summary" class="text-left bg-gray-700 p-4 rounded-lg mb-6 max-h-60 overflow-y-auto modal-body">
                 <!-- Order summary will be injected here -->
             </div>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                  <button onclick="sendOrderViaWhatsApp()" class="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center justify-center gap-2">
-                    <i class="fab fa-whatsapp"></i> Enviar Encomenda
+                    <i class="fab fa-whatsapp"></i> Enviar Pedido
                 </button>
-                <button onclick="closeConfirmationModal()" class="w-full bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-400 transition-all">Fechar</button>
+                <button onclick="closeConfirmationModal()" class="w-full bg-gray-600 text-gray-100 font-bold py-3 px-6 rounded-lg hover:bg-gray-500 transition-all">Fechar</button>
             </div>
         </div>
     </div>
     
     <!-- Custom Alert Modal -->
-    <div id="alert-modal" class="alert-modal fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 opacity-0">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm text-center p-6 transform scale-95">
+    <div id="alert-modal" class="alert-modal fixed inset-0 bg-black bg-opacity-60 z-[60] hidden items-center justify-center p-4 opacity-0">
+        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6 transform scale-95 transition-transform">
             <div id="alert-icon" class="mx-auto mb-4"></div>
-            <h3 id="alert-title" class="text-xl font-bold text-gray-800 mb-2">Atenção!</h3>
-            <p id="alert-message" class="text-gray-600 mb-6">Mensagem de alerta.</p>
+            <h3 id="alert-title" class="text-xl font-bold text-gray-100 mb-2">Atenção!</h3>
+            <p id="alert-message" class="text-gray-400 mb-6">Mensagem de alerta.</p>
             <button onclick="closeAlertModal()" class="w-full bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 transition-all">OK</button>
         </div>
     </div>
@@ -220,49 +270,50 @@
 
 <script>
 // --- DATABASE (Products and Toppings) ---
-// This section holds all the data for products and toppings.
-// It's structured as a JavaScript object for easy access.
 const products = [
-    { id: 1, name: 'Copo 300ml', price: 14.00, freeToppings: 3 },
-    { id: 2, name: 'Copo 400ml', price: 17.00, freeToppings: 3 },
-    { id: 3, name: 'Copo 500ml', price: 20.00, freeToppings: 3 },
-    { id: 4, name: 'Barca M', price: 55.00, freeToppings: 3 },
+    { id: 1, name: 'Copo 300ml', price: 14.00 },
+    { id: 2, name: 'Copo 400ml', price: 17.00 },
+    { id: 3, name: 'Copo 500ml', price: 20.00 },
+    { id: 4, name: 'Barca M', price: 55.00 },
 ];
 
 const toppings = {
     free: {
-        title: '🍓 Frutas e Cremes',
-        items: ['Banana', 'Morango', 'Manga', 'Kiwi', 'Uva', 'Ananás', 'Creme de Leite Ninho', 'Creme de Cupuaçu', 'Mousse de Maracujá', 'Creme de Avelã']
+        title: '🍓 Frutas e Cremes (Grátis, escolha até 3)',
+        limit: 3,
+        items: ['Sorvete', 'Banana', 'Morango', 'Manga', 'Kiwi', 'Uva', 'Abacaxi', 'Creme de Leite Ninho', 'Creme de Cupuaçu', 'Mousse de Maracujá', 'Creme de Avelã']
+    },
+    grains: {
+        title: '🌾 Grãos e Cereais (Grátis, escolha até 2)',
+        limit: 2,
+        items: ['Granola Tradicional', 'Aveia', 'Flocos', 'Tapioca', 'Paçoca', 'Leite em Pó', 'Amendoim', 'Coco Ralado']
     },
     caldas: {
-        title: '🍯 Caldas',
+        title: '🍯 Caldas (Grátis, escolha 1)',
         limit: 1,
-        items: ['Leite Condensado', 'Calda de Chocolate', 'Calda de Morango', 'Calda de Caramelo', 'Mel']
-    },
-    paid_tier1: {
-        title: '🌾 Grãos e Cereais',
-        limit: 2,
-        items: ['Granola Tradicional', 'Granola de Chocolate', 'Aveia', 'Flocos de Arroz', 'Paçoca', 'Leite em Pó', 'Amendoim', 'Coco Ralado', 'Ovomaltine']
+        items: ['Leite Condensado', 'Calda de Chocolate', 'Calda de Morango', 'Calda de Caramelo', 'Calda de Açaí', 'Calda de Kiwi']
     },
     paid_tier2: {
-        title: '🍫 Doces e Chocolates (+ 3,00 € cada)',
+        title: '🍫 Doces e Chocolates (+ R$ 3,00 cada)',
         price: 3.00,
-        items: ['Gotas de Chocolate', 'Confetes', 'Bis Picado', 'Ouro Branco', 'Sonho de Valsa', 'Gomas']
+        items: ['Gotas de Chocolate', 'Confetes', 'Bis Picado', 'Ouro Branco', 'Sonho de Valsa']
     },
     paid_tier3: {
-        title: '⭐ Algo mais? (+ 4,00 € cada)',
+        title: '⭐ Mais alguma coisa? (+ R$ 4,00 cada)',
         price: 4.00,
-        items: ['Castanha de Caju', 'Nozes', 'Banana', 'Morango', 'Manga', 'Kiwi', 'Uva', 'Creme de Leite Ninho', 'Creme de Cupuaçu', 'Mousse de Maracujá', 'Creme de Avelã']
+        items: [
+            'Sorvete', 'Banana', 'Morango', 'Manga', 'Kiwi', 'Uva', 'Abacaxi',
+            'Creme de Leite Ninho', 'Creme de Cupuaçu', 'Mousse de Maracujá', 'Creme de Avelã'
+        ]
     }
 };
-
-const deliveryFee = 6.00;
-const currencySymbol = '€';
 
 // --- APPLICATION STATE ---
 let cart = [];
 let currentItem = null;
 let whatsAppMessage = '';
+const CART_STORAGE_KEY = 'saborAcaiteriaCart';
+const CUSTOMER_INFO_STORAGE_KEY = 'saborAcaiteriaCustomerInfo';
 
 // --- DOM ELEMENT SELECTORS ---
 const productList = document.getElementById('product-list');
@@ -271,15 +322,50 @@ const cartModal = document.getElementById('cart-modal');
 const confirmationModal = document.getElementById('confirmation-modal');
 const cartButton = document.getElementById('cart-button');
 const alertModal = document.getElementById('alert-modal');
+const customerNameInput = document.getElementById('customer-name');
+const customerAddressInput = document.getElementById('customer-address');
+const neighborhoodSelect = document.getElementById('neighborhood');
+const deliveryFields = document.getElementById('delivery-fields');
+const deliveryOptionRadios = document.querySelectorAll('input[name="delivery_option"]');
 
 // --- HELPER FUNCTIONS ---
-/**
- * Formats a number into a currency string (e.g., 14.5 -> "14,50 €").
- * @param {number} value The number to format.
- * @returns {string} The formatted currency string.
- */
 function formatCurrency(value) {
-    return `${value.toFixed(2).replace('.', ',')} ${currencySymbol}`;
+    return `R$ ${value.toFixed(2).replace('.', ',')}`;
+}
+
+// --- LOCAL STORAGE FUNCTIONS ---
+function saveCart() {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+}
+
+function loadCart() {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+}
+
+function saveCustomerInfo() {
+    const info = {
+        name: customerNameInput.value,
+        address: customerAddressInput.value,
+        neighborhood: neighborhoodSelect.value,
+        deliveryOption: document.querySelector('input[name="delivery_option"]:checked').value
+    };
+    localStorage.setItem(CUSTOMER_INFO_STORAGE_KEY, JSON.stringify(info));
+}
+
+function loadCustomerInfo() {
+    const savedInfo = localStorage.getItem(CUSTOMER_INFO_STORAGE_KEY);
+    if (savedInfo) {
+        const info = JSON.parse(savedInfo);
+        customerNameInput.value = info.name || '';
+        customerAddressInput.value = info.address || '';
+        neighborhoodSelect.value = info.neighborhood || '';
+        if (info.deliveryOption) {
+            document.querySelector(`input[name="delivery_option"][value="${info.deliveryOption}"]`).checked = true;
+        }
+    }
 }
 
 
@@ -314,12 +400,12 @@ function renderProducts() {
     productList.innerHTML = '';
     products.forEach(product => {
         const productCard = `
-            <div class="border border-gray-200 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-500 cursor-pointer flex flex-col justify-between" onclick="openItemModal(${product.id})">
+            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer flex flex-col justify-between" onclick="openItemModal(${product.id})">
                 <div>
-                    <h3 class="font-bold text-xl text-gray-800">${product.name}</h3>
-                    <p class="text-2xl font-semibold text-purple-700 mt-2">${formatCurrency(product.price)}</p>
+                    <h3 class="font-bold text-xl text-gray-100">${product.name}</h3>
+                    <p class="text-2xl font-semibold text-purple-400 mt-2">${formatCurrency(product.price)}</p>
                 </div>
-                <button class="mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-700 transition-all w-full">Criar</button>
+                <button class="mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-500 transition-all w-full">Montar</button>
             </div>
         `;
         productList.innerHTML += productCard;
@@ -328,30 +414,32 @@ function renderProducts() {
 
 function renderCart() {
     const cartContainer = document.getElementById('cart-items-container');
+    const cartTotalEl = document.getElementById('cart-total');
+    const cartCountEl = document.getElementById('cart-count');
     const checkoutForm = document.getElementById('checkout-form');
-    const cartSummaryDetails = document.getElementById('cart-summary-details');
+    const summaryDetails = document.getElementById('cart-summary-details');
 
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<p class="text-gray-500 text-center">O seu cesto está vazio.</p>';
+        cartContainer.innerHTML = '<p class="text-gray-500 text-center">Seu carrinho está vazio.</p>';
         checkoutForm.classList.add('hidden');
-        cartSummaryDetails.classList.add('hidden');
+        summaryDetails.classList.add('hidden');
     } else {
         checkoutForm.classList.remove('hidden');
-        cartSummaryDetails.classList.remove('hidden');
+        summaryDetails.classList.remove('hidden');
         cartContainer.innerHTML = cart.map((item, index) => `
-            <div class="flex items-start justify-between p-4 border-b">
+            <div class="flex items-start justify-between p-4 border-b border-gray-700">
                 <div>
-                    <p class="font-bold text-lg text-gray-800">${item.name} (x${item.quantity})</p>
-                    <div class="text-sm text-gray-600 pl-2 mt-1">
+                    <p class="font-bold text-lg text-gray-100">${item.name} (x${item.quantity})</p>
+                    <div class="text-sm text-gray-400 pl-2 mt-1">
                         ${item.toppings.length > 0 ? item.toppings.map(t => `<span>- ${t.name} ${t.price > 0 ? `(+ ${formatCurrency(t.price)})` : ''}</span>`).join('<br>') : '<span>- Açaí puro</span>'}
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="font-bold text-lg text-purple-700">${formatCurrency(item.price * item.quantity)}</p>
+                    <p class="font-bold text-lg text-purple-400">${formatCurrency(item.price * item.quantity)}</p>
                     <div class="flex items-center gap-2 mt-2">
-                        <button onclick="updateQuantity(${index}, -1)" class="bg-gray-200 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
+                        <button onclick="updateQuantity(${index}, -1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
                         <span class="font-bold w-5 text-center">${item.quantity}</span>
-                        <button onclick="updateQuantity(${index}, 1)" class="bg-gray-200 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
+                        <button onclick="updateQuantity(${index}, 1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
                         <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
@@ -359,13 +447,32 @@ function renderCart() {
         `).join('');
     }
 
-    const itemsTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const finalTotal = itemsTotal > 0 ? itemsTotal + deliveryFee : 0;
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const deliveryOption = document.querySelector('input[name="delivery_option"]:checked').value;
+    
+    let deliveryFee = 0;
+    if (deliveryOption === 'delivery' && subtotal > 0) {
+        const selectedOption = neighborhoodSelect.options[neighborhoodSelect.selectedIndex];
+        deliveryFee = parseFloat(selectedOption.dataset.fee || 0);
+    }
+    
+    const finalTotal = subtotal + deliveryFee;
 
-    document.getElementById('cart-subtotal').textContent = formatCurrency(itemsTotal);
+    document.getElementById('cart-subtotal').textContent = formatCurrency(subtotal);
     document.getElementById('cart-delivery-fee').textContent = formatCurrency(deliveryFee);
-    document.getElementById('cart-total').textContent = formatCurrency(finalTotal);
-    updateCartIcon();
+    cartTotalEl.textContent = formatCurrency(finalTotal);
+    cartCountEl.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+// --- DELIVERY OPTION LOGIC ---
+function toggleDeliveryFields() {
+    const deliveryOption = document.querySelector('input[name="delivery_option"]:checked').value;
+    if (deliveryOption === 'takeout') {
+        deliveryFields.classList.add('hidden');
+    } else {
+        deliveryFields.classList.remove('hidden');
+    }
+    renderCart(); // Re-calculate total when option changes
 }
 
 // --- MODAL LOGIC ---
@@ -378,32 +485,37 @@ function openItemModal(productId) {
         price: product.price,
         quantity: 1,
         toppings: [],
-        freeToppingLimit: product.freeToppings
     };
 
-    document.getElementById('modal-title').textContent = `Crie o seu ${product.name}`;
+    document.getElementById('modal-title').textContent = `Monte seu ${product.name}`;
     const modalBody = document.getElementById('modal-body');
-    modalBody.innerHTML = '';
+    modalBody.innerHTML = ''; // Clear previous content
+
+    const warningNote = `
+        <div class="bg-yellow-900/50 border-l-4 border-yellow-500 text-yellow-300 p-4 rounded-md" role="alert">
+            <div class="flex">
+                <div class="py-1"><i class="fas fa-info-circle mr-3"></i></div>
+                <div>
+                    <p class="font-bold">Atenção!</p>
+                    <p class="text-sm">Escolha seus adicionais com carinho. Nossos copos têm espaço limitado e talvez não seja possível incluir todos os itens selecionados.</p>
+                </div>
+            </div>
+        </div>
+    `;
+    modalBody.innerHTML += warningNote;
 
     Object.entries(toppings).forEach(([key, category]) => {
         const section = document.createElement('div');
         
-        let categoryTitle = category.title;
-        if (key === 'free') {
-            categoryTitle = `${category.title} (escolha até ${product.freeToppings} opções grátis)`;
-        } else if (category.limit) {
-            categoryTitle = `${category.title} (escolha até ${category.limit} opç${category.limit > 1 ? 'ões' : 'ão'} grátis)`;
-        }
-
         let itemsHTML = category.items.map(item => `
-            <label class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 cursor-pointer">
-                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500" name="${key}" value="${item}" data-price="${category.price || 0}">
-                <span>${item}</span>
+            <label class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-700 cursor-pointer">
+                <input type="checkbox" class="h-5 w-5 rounded border-gray-500 bg-gray-600 text-purple-600 focus:ring-purple-500" name="${key}" value="${item}" data-price="${category.price || 0}">
+                <span class="text-gray-300">${item}</span>
             </label>
         `).join('');
 
         section.innerHTML = `
-            <h4 class="text-lg font-bold text-gray-700 mb-2 pb-1 border-b">${categoryTitle}</h4>
+            <h4 class="text-lg font-bold text-gray-200 mb-2 pb-1 border-b border-gray-600">${category.title}</h4>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${itemsHTML}</div>
         `;
         modalBody.appendChild(section);
@@ -427,21 +539,30 @@ function closeItemModal() {
 function updateModalItemTotal() {
     let totalFromToppings = 0;
     const currentToppingsList = [];
-    
-    let freebiesUsed = document.querySelectorAll('#modal-body input[name="free"]:checked').length;
-    let caldasUsed = document.querySelectorAll('#modal-body input[name="caldas"]:checked').length;
-    let graosUsed = document.querySelectorAll('#modal-body input[name="paid_tier1"]:checked').length;
 
-    document.querySelectorAll('#modal-body input[name="free"]').forEach(cb => { cb.disabled = !cb.checked && freebiesUsed >= currentItem.freeToppingLimit; });
-    document.querySelectorAll('#modal-body input[name="caldas"]').forEach(cb => { cb.disabled = !cb.checked && caldasUsed >= toppings.caldas.limit; });
-    document.querySelectorAll('#modal-body input[name="paid_tier1"]').forEach(cb => { cb.disabled = !cb.checked && graosUsed >= toppings.paid_tier1.limit; });
+    Object.entries(toppings).forEach(([key, category]) => {
+        const checkboxes = document.querySelectorAll(`#modal-body input[name="${key}"]`);
+        const checkedCheckboxes = document.querySelectorAll(`#modal-body input[name="${key}"]:checked`);
 
-    document.querySelectorAll('#modal-body input[type="checkbox"]:checked').forEach(checkbox => {
-        const price = parseFloat(checkbox.dataset.price);
-        if (price > 0) {
-            totalFromToppings += price;
+        if (category.limit) {
+            if (checkedCheckboxes.length >= category.limit) {
+                checkboxes.forEach(cb => {
+                    if (!cb.checked) cb.disabled = true;
+                });
+            } else {
+                checkboxes.forEach(cb => {
+                    cb.disabled = false;
+                });
+            }
         }
-        currentToppingsList.push({ name: checkbox.value, price: price });
+        
+        checkedCheckboxes.forEach(checkbox => {
+            const price = parseFloat(checkbox.dataset.price);
+            if (price > 0) {
+                totalFromToppings += price;
+            }
+            currentToppingsList.push({ name: checkbox.value, price: price });
+        });
     });
     
     currentItem.price = currentItem.basePrice + totalFromToppings;
@@ -450,9 +571,7 @@ function updateModalItemTotal() {
 }
 
 function toggleCartModal() {
-    if (!cartModal.classList.contains('flex')) {
-        renderCart();
-    }
+    renderCart();
     cartModal.classList.toggle('hidden');
     cartModal.classList.toggle('flex');
 }
@@ -466,9 +585,11 @@ function closeConfirmationModal() {
 document.getElementById('add-to-cart-btn').addEventListener('click', () => {
     const existingItemIndex = cart.findIndex(item => {
         if (item.id !== currentItem.id || item.toppings.length !== currentItem.toppings.length) return false;
+        
         const currentToppingsSet = new Set(currentItem.toppings.map(t => t.name));
         const existingToppingsSet = new Set(item.toppings.map(t => t.name));
         if (currentToppingsSet.size !== existingToppingsSet.size) return false;
+        
         return [...currentToppingsSet].every(t => existingToppingsSet.has(t));
     });
 
@@ -478,10 +599,9 @@ document.getElementById('add-to-cart-btn').addEventListener('click', () => {
         cart.push({ ...currentItem });
     }
     
+    saveCart();
     closeItemModal();
-    if (cartModal.classList.contains('flex')) {
-        renderCart();
-    }
+    renderCart();
     updateCartIcon();
 });
 
@@ -490,13 +610,18 @@ function updateQuantity(index, change) {
         cart[index].quantity += change;
     } else {
         removeFromCart(index);
+        return;
     }
+    saveCart();
     renderCart();
+    updateCartIcon();
 }
 
 function removeFromCart(index) {
     cart.splice(index, 1);
+    saveCart();
     renderCart();
+    updateCartIcon();
 }
 
 function updateCartIcon() {
@@ -516,23 +641,41 @@ function updateCartIcon() {
 // --- ORDER FINALIZATION LOGIC ---
 function finalizeOrder() {
     if (cart.length === 0) {
-        showAlert('O seu cesto está vazio!', 'Cesto Vazio', true);
+        showAlert('Seu carrinho está vazio!', 'Carrinho Vazio', true);
         return;
     }
-    const name = document.getElementById('customer-name').value.trim();
-    const address = document.getElementById('customer-address').value.trim();
+    const name = customerNameInput.value.trim();
+    const address = customerAddressInput.value.trim();
+    const neighborhood = neighborhoodSelect.value;
     const payment = document.getElementById('payment-method').value;
     const obs = document.getElementById('observations').value.trim();
+    const deliveryOption = document.querySelector('input[name="delivery_option"]:checked').value;
 
-    if (!name || !address) {
-        showAlert('Por favor, preencha o seu Nome e Morada para continuar.', 'Dados Incompletos', true);
+    if (!name) {
+        showAlert('Por favor, preencha seu Nome para continuar.', 'Dados Incompletos', true);
         return;
     }
-
-    let summary = `*NOVA ENCOMENDA - SABOR AÇAÍTERIA*\n\n`;
+    
+    let deliveryFee = 0;
+    let summary = `*NOVO PEDIDO - SABOR AÇAÍTERIA*\n\n`;
     summary += `*Cliente:* ${name}\n`;
-    summary += `*Morada:* ${address}\n\n`;
-    summary += `*ARTIGOS DA ENCOMENDA:*\n`;
+
+    if (deliveryOption === 'delivery') {
+        if (!address || !neighborhood) {
+            showAlert('Por favor, selecione o Bairro e preencha o Endereço para entrega.', 'Dados Incompletos', true);
+            return;
+        }
+        summary += `*Opção:* ENTREGA\n`;
+        summary += `*Tempo Estimado:* 20-60 min\n`;
+        summary += `*Endereço:* ${address}, ${neighborhood}\n\n`;
+        const selectedOption = neighborhoodSelect.options[neighborhoodSelect.selectedIndex];
+        deliveryFee = parseFloat(selectedOption.dataset.fee || 0);
+    } else {
+        summary += `*Opção:* RETIRAR NA LOJA\n`;
+        summary += `*Tempo Estimado:* 20-30 min\n\n`;
+    }
+
+    summary += `*ITENS DO PEDIDO:*\n`;
     summary += `------------------------\n`;
 
     cart.forEach(item => {
@@ -544,51 +687,78 @@ function finalizeOrder() {
         } else {
             summary += `  - Açaí puro\n`;
         }
-        summary += `Subtotal do artigo: ${formatCurrency(item.price * item.quantity)}\n`;
+        summary += `Subtotal: ${formatCurrency(item.price * item.quantity)}\n`;
         summary += `------------------------\n`;
     });
 
-    const itemsTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const finalTotal = itemsTotal + deliveryFee;
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const finalTotal = subtotal + deliveryFee;
 
-    summary += `\n*Subtotal dos Artigos: ${formatCurrency(itemsTotal)}*\n`;
-    summary += `*Taxa de Entrega: ${formatCurrency(deliveryFee)}*\n`;
-    summary += `*TOTAL DA ENCOMENDA: ${formatCurrency(finalTotal)}*\n`;
-    summary += `*Método de Pagamento:* ${payment}\n`;
+    summary += `\n*Subtotal dos Itens: ${formatCurrency(subtotal)}*\n`;
+    if (deliveryOption === 'delivery') {
+        summary += `*Taxa de Entrega: ${formatCurrency(deliveryFee)}*\n`;
+    }
+    summary += `*TOTAL DO PEDIDO: ${formatCurrency(finalTotal)}*\n`;
+    summary += `*Forma de Pagamento:* ${payment}\n`;
     if (obs) {
         summary += `*Observações:* ${obs}\n`;
     }
 
     whatsAppMessage = encodeURIComponent(summary);
+    
     document.getElementById('order-summary').innerHTML = summary.replace(/\n/g, '<br>').replace(/\*(.*?)\*/g, '<strong>$1</strong>');
     
-    toggleCartModal();
+    toggleCartModal(); 
     confirmationModal.classList.remove('hidden');
     confirmationModal.classList.add('flex');
 }
 
 function sendOrderViaWhatsApp() {
-    // ATENÇÃO: Substitua este número pelo número de WhatsApp correto para Portugal (ex: 351XXXXXXXXX)
-    const yourNumber = '351912345678'; 
-    
+    const yourNumber = '5594992816973'; 
     const url = `https://wa.me/${yourNumber}?text=${whatsAppMessage}`;
     window.open(url, '_blank');
     
     cart = [];
+    saveCart();
+    localStorage.removeItem(CUSTOMER_INFO_STORAGE_KEY);
+
     closeConfirmationModal();
     renderCart();
+    updateCartIcon();
     document.getElementById('checkout-form').reset();
-    document.getElementById('customer-name').value = '';
-    document.getElementById('customer-address').value = '';
-    document.getElementById('observations').value = '';
+    document.querySelector('input[name="delivery_option"][value="delivery"]').checked = true;
+    toggleDeliveryFields();
+    customerNameInput.value = '';
+    customerAddressInput.value = '';
+    neighborhoodSelect.value = '';
 }
 
 
 // --- INITIALIZATION ---
-window.onload = () => {
+function initializeApp() {
+    loadCart();
+    loadCustomerInfo();
     renderProducts();
+    renderCart();
     updateCartIcon();
-};
+    toggleDeliveryFields(); // Set initial state for delivery fields
+
+    // Add event listeners
+    customerNameInput.addEventListener('input', saveCustomerInfo);
+    customerAddressInput.addEventListener('input', saveCustomerInfo);
+    neighborhoodSelect.addEventListener('change', () => {
+        saveCustomerInfo();
+        renderCart(); // Re-render cart to update delivery fee
+    });
+    deliveryOptionRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            toggleDeliveryFields();
+            saveCustomerInfo();
+        });
+    });
+}
+
+window.onload = initializeApp;
 
 </script>
 </body>
