@@ -98,7 +98,7 @@
     </div>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/5594992816973" target="_blank" class="fixed bottom-5 left-5 z-50">
+    <a href="https://wa.me/5594991623576" target="_blank" class="fixed bottom-5 left-5 z-50">
         <button class="bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-110">
             <i class="fab fa-whatsapp text-3xl"></i>
         </button>
@@ -274,7 +274,7 @@ const products = [
     { id: 1, name: 'Copo 300ml', price: 14.00 },
     { id: 2, name: 'Copo 400ml', price: 17.00 },
     { id: 3, name: 'Copo 500ml', price: 20.00 },
-    { id: 4, name: 'Barca M', price: 55.00 },
+    { id: 4, name: 'Barca M', price: 55.00, disabled: true }, // Barca is now disabled
 ];
 
 const toppings = {
@@ -292,6 +292,11 @@ const toppings = {
         title: '🍯 Caldas (Grátis, escolha 1)',
         limit: 1,
         items: ['Leite Condensado', 'Calda de Chocolate', 'Calda de Morango', 'Calda de Caramelo', 'Calda de Açaí', 'Calda de Kiwi']
+    },
+    paid_tier1: {
+        title: '💎 Caldas Especiais (+ R$ 2,00 cada)',
+        price: 2.00,
+        items: ['Calda de Pistache', 'Calda de Ninho com Nutella']
     },
     paid_tier2: {
         title: '🍫 Doces e Chocolates (+ R$ 3,00 cada)',
@@ -399,13 +404,27 @@ function closeAlertModal() {
 function renderProducts() {
     productList.innerHTML = '';
     products.forEach(product => {
+        const isDisabled = product.disabled || false;
+
+        const cardClasses = isDisabled
+            ? 'bg-gray-800 border border-gray-700 rounded-xl p-4 text-center opacity-50 cursor-not-allowed flex flex-col justify-between'
+            : 'bg-gray-800 border border-gray-700 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer flex flex-col justify-between';
+
+        const buttonHTML = isDisabled
+            ? '<button class="mt-4 bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg cursor-not-allowed w-full">Em Breve</button>'
+            : `<button class="mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-500 transition-all w-full">Montar</button>`;
+
+        const onClickAction = isDisabled
+            ? ''
+            : `onclick="openItemModal(${product.id})"`;
+
         const productCard = `
-            <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer flex flex-col justify-between" onclick="openItemModal(${product.id})">
+            <div class="${cardClasses}" ${onClickAction}>
                 <div>
                     <h3 class="font-bold text-xl text-gray-100">${product.name}</h3>
                     <p class="text-2xl font-semibold text-purple-400 mt-2">${formatCurrency(product.price)}</p>
                 </div>
-                <button class="mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-500 transition-all w-full">Montar</button>
+                ${buttonHTML}
             </div>
         `;
         productList.innerHTML += productCard;
@@ -714,7 +733,7 @@ function finalizeOrder() {
 }
 
 function sendOrderViaWhatsApp() {
-    const yourNumber = '5594992816973'; 
+    const yourNumber = '5594991623576'; 
     const url = `https://wa.me/${yourNumber}?text=${whatsAppMessage}`;
     window.open(url, '_blank');
     
