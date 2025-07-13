@@ -341,8 +341,7 @@
         currentItem: null,
         whatsAppMessage: '',
         isStoreOpen: false,
-        isDeliveryTime: false, // Tracks if it's past DELIVERY_START_HOUR
-        DELIVERY_START_HOUR: 18, // 6 PM
+        isDeliveryTime: false, // Tracks if it's past the current day's delivery start hour
         adminSettings: {},
         products: [],
         toppings: {},
@@ -353,15 +352,17 @@
             deliveryMode: 'both', // 'both', 'delivery', 'takeout'
             openingTime: '15:15', // 3:15 PM
             closingTime: '22:15', // 10:15 PM
-            openDays: [0, 1, 2, 3, 4, 5, 6], // Mon-Sat (Sunday = 0) - ADDED SUNDAY (0)
+            openDays: [0, 1, 2, 3, 4, 5, 6], // Sunday = 0, Monday = 1, etc.
             whatsappNumber: '5594991623576',
-            address: 'Av. Rio Branco, Bairro Novo Horizonte, prox a praça'
+            address: 'Av. Rio Branco, Bairro Novo Horizonte, prox a praça',
+            weekdayDeliveryStartTime: '18:00', // 6 PM
+            weekendDeliveryStartTime: '15:30'  // 3:30 PM for Saturday (6) and Sunday (0)
         },
         defaultProducts: [
             { id: 1, name: 'Copo 300ml', price: 14.00, disabled: false },
             { id: 2, name: 'Copo 400ml', price: 17.00, disabled: false },
             { id: 3, name: 'Copo 500ml', price: 20.00, disabled: false },
-            { id: 4, name: 'Barca M (Em Breve)', price: 55.00, disabled: true }, // Changed name and kept disabled: true
+            { id: 4, name: 'Barca M', price: 55.00, disabled: false },
         ],
         defaultToppings: {
             free: {
@@ -380,7 +381,7 @@
                 ]
             },
             caldas: {
-                title: '🍯 Caldas (Grátis, escolha 1)', limit: 1, items: [
+                title: '🍯 Caldas (Grátis, escolha até 2)', limit: 2, items: [ // Changed limit to 2
                     { name: 'Leite Condensado', disabled: false }, { name: 'Calda de Chocolate', disabled: false }, { name: 'Calda de Morango', disabled: false }, 
                     { name: 'Calda de Caramelo', disabled: false }, { name: 'Calda de Açaí', disabled: false }, { name: 'Calda de Kiwi', disabled: false }
                 ]
@@ -388,7 +389,7 @@
             paid_tier2: {
                 title: '🍫 Doces e Chocolates (+ R$ 3,00 cada)', price: 3.00, items: [
                     { name: 'Gotas de Chocolate', disabled: false }, { name: 'Confetes', disabled: false }, { name: 'Bis Picado', disabled: false }, 
-                    { name: 'Ouro Branco', disabled: false }, { name: 'Sonho de Valsa', disabled: false }
+                    { name: 'Sonho de Valsa', disabled: false }
                 ]
             },
             paid_tier3: {
@@ -496,7 +497,8 @@
         },
         loadLocalData() {
             const savedSettings = localStorage.getItem(app.ADMIN_SETTINGS_STORAGE_KEY);
-            app.adminSettings = savedSettings ? JSON.parse(savedSettings) : app.defaultAdminSettings;
+            // Merge saved settings with defaults to ensure new properties are present
+            app.adminSettings = savedSettings ? { ...app.defaultAdminSettings, ...JSON.parse(savedSettings) } : app.defaultAdminSettings;
 
             const savedProducts = localStorage.getItem(app.PRODUCTS_STORAGE_KEY);
             app.products = savedProducts ? JSON.parse(savedProducts) : app.defaultProducts;
@@ -548,6 +550,11 @@
             const currentMinute = now.getMinutes();
             const currentDay = now.getDay(); // Sunday = 0, Monday = 1, etc.
 
+            // Determine current delivery start time based on day of week
+            const isWeekend = (currentDay === 0 || currentDay === 6); // Sunday or Saturday
+            const deliveryStartTimeStr = isWeekend ? app.adminSettings.weekendDeliveryStartTime : app.adminSettings.weekdayDeliveryStartTime;
+            const [deliveryStartHour, deliveryStartMinute] = deliveryStartTimeStr.split(':').map(Number);
+            
             // Check if store is open based on admin settings
             if (app.adminSettings.storeStatus === 'open') {
                 app.isStoreOpen = true;
@@ -574,8 +581,10 @@
                 }
             }
 
-            // Check delivery time
-            app.isDeliveryTime = currentHour >= app.DELIVERY_START_HOUR;
+            // Check if it's past the delivery start time for today
+            const currentDeliveryTimeInMinutes = currentHour * 60 + currentMinute;
+            const deliveryStartTimeInMinutes = deliveryStartHour * 60 + deliveryStartMinute;
+            app.isDeliveryTime = currentDeliveryTimeInMinutes >= deliveryStartTimeInMinutes;
 
             // Update store status indicator and banner
             if (app.isStoreOpen) {
@@ -596,15 +605,13 @@
             }
 
             // Update product buttons based on store status
-            // This part is now handled by renderProducts for initial display and re-rendering
-            // when store status changes.
             app.renderProducts(); // Re-render products to update their status display
 
             // Update delivery time banner
             if (!app.isDeliveryTime && app.isStoreOpen && (app.adminSettings.deliveryMode === 'both' || app.adminSettings.deliveryMode === 'delivery')) {
                 app.elements.deliveryTimeBanner.innerHTML = `
                     <div class="bg-blue-900/50 border-l-4 border-blue-500 text-blue-300 p-4 rounded-md mb-8 text-center" role="alert">
-                        <p class="font-bold text-lg">Entregas começam a partir das ${app.DELIVERY_START_HOUR}:00h!</p>
+                        <p class="font-bold text-lg">Entregas começam a partir das ${deliveryStartTimeStr}h!</p>
                         <p class="text-sm">Você ainda pode fazer pedidos para retirar na loja.</p>
                     </div>
                 `;
@@ -651,11 +658,6 @@
                 `;
                 app.elements.productList.innerHTML += productCard;
             });
-            // No need to call checkStoreStatus here, as it calls renderProducts already.
-            // However, if renderProducts is called independently, it might need to ensure buttons are correctly enabled/disabled by store status.
-            // The checkStoreStatus function already handles the overall store status and re-renders products,
-            // so this function focuses on rendering based on the product's own 'disabled' property.
-            // The `checkStoreStatus` function will then adjust buttons further if the store is closed.
         },
 
         renderCart() {
@@ -721,6 +723,12 @@
             const takeoutRadio = app.elements.deliveryOptionTakeout.querySelector('input');
             const deliveryOptionsContainer = document.getElementById('delivery-options');
 
+            // Determine current delivery start time for display
+            const now = new Date();
+            const currentDay = now.getDay(); // Sunday = 0, Monday = 1, etc.
+            const isWeekend = (currentDay === 0 || currentDay === 6); // Sunday or Saturday
+            const deliveryStartTimeStr = isWeekend ? app.adminSettings.weekendDeliveryStartTime : app.adminSettings.weekdayDeliveryStartTime;
+
             // Reset states
             app.elements.deliveryOptionDelivery.classList.add('hidden');
             app.elements.deliveryOptionDelivery.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -751,7 +759,7 @@
                 deliveryRadio.disabled = true;
                 app.elements.deliveryOptionDelivery.classList.add('opacity-50', 'cursor-not-allowed');
                 app.elements.deliveryOptionDelivery.querySelector('.radio-title').textContent = 'Delivery (Indisponível)';
-                app.elements.deliveryOptionDelivery.querySelector('.text-sm').textContent = `Disponível a partir das ${app.DELIVERY_START_HOUR}:00h`;
+                app.elements.deliveryOptionDelivery.querySelector('.text-sm').textContent = `Disponível a partir das ${deliveryStartTimeStr}h`;
                 // Remove 'delivery' from available options if it's disabled due to time
                 availableOptions = availableOptions.filter(option => option !== 'delivery');
             }
@@ -992,9 +1000,15 @@
                 return;
             }
 
+            // Get current delivery start time for the alert message
+            const now = new Date();
+            const currentDay = now.getDay(); // Sunday = 0, Monday = 1, etc.
+            const isWeekend = (currentDay === 0 || currentDay === 6); // Sunday or Saturday
+            const deliveryStartTimeStr = isWeekend ? app.adminSettings.weekendDeliveryStartTime : app.adminSettings.weekdayDeliveryStartTime;
+
             // New check for delivery time
             if (deliveryOption === 'delivery' && !app.isDeliveryTime) {
-                app.showAlert(`As entregas só começam a partir das ${app.DELIVERY_START_HOUR}:00h. Por favor, escolha "Retirar na Loja" ou aguarde.`, 'Horário de Entrega', true);
+                app.showAlert(`As entregas só começam a partir das ${deliveryStartTimeStr}h. Por favor, escolha "Retirar na Loja" ou aguarde.`, 'Horário de Entrega', true);
                 return;
             }
             
@@ -1147,11 +1161,24 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Horário</h6>
+                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Horário de Abertura/Fechamento</h6>
                                     <div class="flex items-center gap-2">
                                         <input type="time" id="admin-opening-time" value="${app.adminSettings.openingTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
                                         <span>às</span>
                                         <input type="time" id="admin-closing-time" value="${app.adminSettings.closingTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                    </div>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Horário de Início da Entrega</h6>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="admin-weekday-delivery-start-time" class="block text-xs font-medium text-gray-400 mb-1">Dias de Semana (Seg-Mex)</label>
+                                            <input type="time" id="admin-weekday-delivery-start-time" value="${app.adminSettings.weekdayDeliveryStartTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                        </div>
+                                        <div>
+                                            <label for="admin-weekend-delivery-start-time" class="block text-xs font-medium text-gray-400 mb-1">Fins de Semana (Sáb-Dom)</label>
+                                            <input type="time" id="admin-weekend-delivery-start-time" value="${app.adminSettings.weekendDeliveryStartTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                        </div>
                                     </div>
                                 </div>
                              </div>
@@ -1229,6 +1256,8 @@
                 openDays: Array.from(document.querySelectorAll('input[name="admin_open_day"]:checked')).map(cb => parseInt(cb.value)),
                 whatsappNumber: document.getElementById('admin-whatsapp-number').value,
                 address: document.getElementById('admin-address').value,
+                weekdayDeliveryStartTime: document.getElementById('admin-weekday-delivery-start-time').value,
+                weekendDeliveryStartTime: document.getElementById('admin-weekend-delivery-start-time').value,
             };
             localStorage.setItem(app.ADMIN_SETTINGS_STORAGE_KEY, JSON.stringify(newAdminSettings));
             app.adminSettings = newAdminSettings;
