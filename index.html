@@ -136,6 +136,24 @@
         </button>
     </div>
 
+    <!-- Combo Size Selection Modal -->
+    <div id="combo-size-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
+        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 id="combo-size-modal-title" class="text-2xl font-bold text-purple-400">Escolha o Tamanho do Combo</h3>
+                <button onclick="app.closeComboSizeModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+            </div>
+            <div id="combo-size-modal-body" class="p-6 space-y-4 overflow-y-auto modal-body">
+                <!-- Size options will be rendered here by JavaScript -->
+            </div>
+            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-end">
+                <button id="select-combo-size-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center gap-2" disabled>
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Item Customization Modal -->
     <div id="item-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
         <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
@@ -345,6 +363,7 @@
         adminSettings: {},
         products: [],
         toppings: {},
+        selectedComboProductId: null, // New state to hold the ID of the combo being configured
 
         // --- DEFAULT DATA (for initial load or reset) ---
         defaultAdminSettings: {
@@ -359,10 +378,33 @@
             weekendDeliveryStartTime: '15:30'  // 3:30 PM for Saturday (6) and Sunday (0)
         },
         defaultProducts: [
-            { id: 1, name: 'Copo 300ml', price: 14.00, disabled: false },
-            { id: 2, name: 'Copo 400ml', price: 17.00, disabled: false },
-            { id: 3, name: 'Copo 500ml', price: 20.00, disabled: false },
-            { id: 4, name: 'Barca M', price: 55.00, disabled: false },
+            { id: 1, name: 'Copo 300ml', price: 14.00, disabled: false, type: 'base_acai', description: '' },
+            { id: 2, name: 'Copo 400ml', price: 17.00, disabled: false, type: 'base_acai', description: '' },
+            { id: 3, name: 'Copo 500ml', price: 20.00, disabled: false, type: 'base_acai', description: '' },
+            { id: 4, name: 'Barca M', price: 55.00, disabled: false, type: 'base_acai', description: '' },
+            // Special Combos - now selectable size
+            { id: 5, name: 'Diet Granola', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: granola, leite em pó, leite condensado' },
+            { id: 6, name: 'Refrescante', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: sorvete, calda de chocolate, leite em pó, leite condensado' },
+            { id: 7, name: 'Mega Especial', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: leite em pó, leite condensado, banana, creme de avelã (Nutella)' },
+            { id: 8, name: 'Preferido', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: paçoca, leite em pó, leite condensado, creme de avelã (Nutella)' },
+            { id: 9, name: 'Maltine +', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: ovomaltine, tapioca, leite em pó, leite condensado' },
+            { id: 10, name: 'Amendoimix', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: amendoim, leite em pó, leite condensado' },
+            { id: 11, name: 'Megapower', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: chocopower, leite em pó, leite condensado, creme de avelã (Nutella)' },
+            { id: 12, name: 'Açaí Banana', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: leite em pó, tapioca, leite condensado, banana' },
+            { id: 13, name: 'Favorito Nutella', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: flocos, leite condensado, leite em pó, creme de avelã (Nutella)' },
+            { id: 14, name: 'Sabores do Pará', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: banana, uva, leite em pó, leite condensado, creme de avelã (Nutella)' },
+            { id: 15, name: 'Kids Especial', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: M&M\'s, uva, creme de avelã (Nutella), leite em pó, leite condensado, banana' },
+            { id: 16, name: 'Namorados', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: uva, morango, creme de avelã (Nutella), leite em pó, leite condensado' },
+            { id: 17, name: 'Kitkat', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: KitKat, creme de avelã, leite em pó, calda de chocolate' },
+            { id: 18, name: 'Euforia', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: morango, kiwi, banana, leite em pó, calda de morango' },
+            { id: 19, name: 'Ninho', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: creme de Ninho, creme de avelã, calda de chocolate' },
+            { id: 20, name: 'Bombom', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: Sonho de Valsa, leite em pó, calda de chocolate, creme de avelã' },
+            { id: 21, name: 'Maracujá', disabled: false, type: 'combo_selectable_size', description: 'Sugestão: mousse de maracujá, creme de avelã, leite em pó, calda de chocolate' },
+        ],
+        cupSizes: [ // Define cup sizes and their prices
+            { name: '300ml', price: 14.00 },
+            { name: '400ml', price: 17.00 },
+            { name: '500ml', price: 20.00 }
         ],
         defaultToppings: {
             free: {
@@ -370,7 +412,7 @@
                     { name: 'Sorvete', disabled: false }, { name: 'Banana', disabled: false }, { name: 'Morango', disabled: false }, 
                     { name: 'Manga', disabled: false }, { name: 'Kiwi', disabled: false }, { name: 'Uva', disabled: false }, 
                     { name: 'Abacaxi', disabled: false }, { name: 'Creme de Leite Ninho', disabled: false }, { name: 'Creme de Cupuaçu', disabled: false }, 
-                    { name: 'Mousse de Maracujá', disabled: false }, { name: 'Creme de Avelã', disabled: false }
+                    { name: 'Creme de Avelã', disabled: false }, { name: 'Mousse de Maracujá', disabled: false }
                 ]
             },
             grains: {
@@ -381,7 +423,7 @@
                 ]
             },
             caldas: {
-                title: '🍯 Caldas (Grátis, escolha até 2)', limit: 2, items: [ // Changed limit to 2
+                title: '🍯 Caldas (Grátis, escolha até 2)', limit: 2, items: [
                     { name: 'Leite Condensado', disabled: false }, { name: 'Calda de Chocolate', disabled: false }, { name: 'Calda de Morango', disabled: false }, 
                     { name: 'Calda de Caramelo', disabled: false }, { name: 'Calda de Açaí', disabled: false }, { name: 'Calda de Kiwi', disabled: false }
                 ]
@@ -389,15 +431,7 @@
             paid_tier2: {
                 title: '🍫 Doces e Chocolates (+ R$ 3,00 cada)', price: 3.00, items: [
                     { name: 'Gotas de Chocolate', disabled: false }, { name: 'Confetes', disabled: false }, { name: 'Bis Picado', disabled: false }, 
-                    { name: 'Sonho de Valsa', disabled: false }
-                ]
-            },
-            paid_tier3: {
-                title: '⭐ Mais alguma coisa? (+ R$ 4,00 cada)', price: 4.00, items: [
-                    { name: 'Sorvete', disabled: false }, { name: 'Banana', disabled: false }, { name: 'Morango', disabled: false }, 
-                    { name: 'Manga', disabled: false }, { name: 'Kiwi', disabled: false }, { name: 'Uva', disabled: false }, 
-                    { name: 'Abacaxi', disabled: false }, { name: 'Creme de Leite Ninho', disabled: false }, { name: 'Creme de Cupuaçu', disabled: false }, 
-                    { name: 'Mousse de Maracujá', disabled: false }, { name: 'Creme de Avelã', disabled: false }
+                    { name: 'Sonho de Valsa', disabled: false }, { name: 'M&M\'s', disabled: false }, { name: 'Ovomaltine', disabled: false }, { name: 'Chocopower', disabled: false }, { name: 'KitKat', disabled: false }
                 ]
             }
         },
@@ -460,6 +494,10 @@
             confirmActionCancelBtn: document.getElementById('confirm-action-cancel-btn'),
             storeAddressDisplay: document.getElementById('store-address-display'),
             whatsappLink: document.getElementById('whatsapp-link'),
+            comboSizeModal: document.getElementById('combo-size-modal'),
+            comboSizeModalTitle: document.getElementById('combo-size-modal-title'),
+            comboSizeModalBody: document.getElementById('combo-size-modal-body'),
+            selectComboSizeBtn: document.getElementById('select-combo-size-btn'),
         },
 
         // --- HELPER FUNCTIONS ---
@@ -631,27 +669,47 @@
             app.elements.productList.innerHTML = '';
             app.products.forEach(product => {
                 const isDisabled = product.disabled;
+                // Determine if it's a base açaí or a customizable combo
+                const isComboWithSelectableSize = product.type === 'combo_selectable_size';
+
                 // Conditional classes for the product card
                 const cardClasses = isDisabled
                     ? "bg-gray-900 border border-gray-800 rounded-xl p-4 text-center transition-all cursor-not-allowed flex flex-col justify-between opacity-60"
                     : "bg-gray-800 border border-gray-700 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer flex flex-col justify-between";
+                
                 // Conditional classes for the button
                 const buttonClasses = isDisabled
                     ? "mt-4 bg-gray-600 text-gray-400 font-semibold py-2 px-4 rounded-lg cursor-not-allowed w-full"
                     : "mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-500 transition-all w-full";
+                
                 // Conditional text for the button
                 const buttonText = isDisabled ? "Em Breve" : "Montar";
-                // Conditional onclick handler for the card (empty if disabled)
-                const onclickHandler = isDisabled ? "" : `onclick="app.openItemModal('${product.id}')"`;
+                
+                // Conditional onclick handler
+                let onclickHandler;
+                if (isDisabled) {
+                    onclickHandler = "";
+                } else if (isComboWithSelectableSize) {
+                    onclickHandler = `onclick="app.openComboSizeModal('${product.id}')"`;
+                } else { // base_acai
+                    onclickHandler = `onclick="app.openItemModal('${product.id}', ${product.price}, '')"`;
+                }
+                
                 // Conditional text colors for name and price
                 const nameColor = isDisabled ? "text-gray-400" : "text-gray-100";
                 const priceColor = isDisabled ? "text-gray-500" : "text-purple-400";
+                const descriptionColor = isDisabled ? "text-gray-500" : "text-gray-400";
+
+                // Display price only for base açaí, not for combos as their price is chosen later
+                const priceDisplay = product.type === 'base_acai' ? `<p class="text-2xl font-semibold ${priceColor} mt-2">${app.formatCurrency(product.price)}</p>` : `<p class="text-xl font-semibold ${priceColor} mt-2">A partir de ${app.formatCurrency(app.cupSizes[0].price)}</p>`;
+
 
                 const productCard = `
                     <div class="${cardClasses}" ${onclickHandler}>
                         <div>
                             <h3 class="font-bold text-xl ${nameColor}">${product.name}</h3>
-                            <p class="text-2xl font-semibold ${priceColor} mt-2">${app.formatCurrency(product.price)}</p>
+                            ${product.description ? `<p class="text-sm ${descriptionColor} mt-1">${product.description}</p>` : ''}
+                            ${priceDisplay}
                         </div>
                         <button class="${buttonClasses}" ${isDisabled ? 'disabled' : ''}>${buttonText}</button>
                     </div>
@@ -668,25 +726,38 @@
             } else {
                 app.elements.checkoutForm.classList.remove('hidden');
                 app.elements.summaryDetails.classList.remove('hidden');
-                app.elements.cartItemsContainer.innerHTML = app.cart.map((item, index) => `
-                    <div class="flex items-start justify-between p-4 border-b border-gray-700">
-                        <div>
-                            <p class="font-bold text-lg text-gray-100">${item.name} (x${item.quantity})</p>
-                            <div class="text-sm text-gray-400 pl-2 mt-1">
-                                ${item.toppings.length > 0 ? item.toppings.map(t => `<span>- ${t.name} ${t.price > 0 ? `(+ ${app.formatCurrency(t.price)})` : ''}</span>`).join('<br>') : '<span>- Açaí puro</span>'}
+                app.elements.cartItemsContainer.innerHTML = app.cart.map((item, index) => {
+                    // Toppings display for all customizable items
+                    let toppingsDisplay = '';
+                    if (item.type === 'base_acai') {
+                        toppingsDisplay = item.toppings.length > 0
+                        ? item.toppings.map(t => `<span>- ${t.name} ${t.price > 0 ? `(+ ${app.formatCurrency(t.price)})` : ''}</span>`).join('<br>')
+                        : '<span>- Açaí puro</span>';
+                    } else if (item.type === 'combo_selectable_size') {
+                        toppingsDisplay = `<span>Tamanho: ${item.selectedSize}</span><br><span>${item.description.replace('Sugestão: ', '')}</span>`;
+                    }
+                    
+
+                    return `
+                        <div class="flex items-start justify-between p-4 border-b border-gray-700">
+                            <div>
+                                <p class="font-bold text-lg text-gray-100">${item.name} (x${item.quantity})</p>
+                                <div class="text-sm text-gray-400 pl-2 mt-1">
+                                    ${toppingsDisplay}
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-lg text-purple-400">${app.formatCurrency(item.price * item.quantity)}</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <button onclick="app.updateQuantity(${index}, -1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
+                                    <span class="font-bold w-5 text-center">${item.quantity}</span>
+                                    <button onclick="app.updateQuantity(${index}, 1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
+                                    <button onclick="app.removeFromCart(${index})" class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <p class="font-bold text-lg text-purple-400">${app.formatCurrency(item.price * item.quantity)}</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button onclick="app.updateQuantity(${index}, -1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
-                                <span class="font-bold w-5 text-center">${item.quantity}</span>
-                                <button onclick="app.updateQuantity(${index}, 1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
-                                <button onclick="app.removeFromCart(${index})" class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             const subtotal = app.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -815,23 +886,111 @@
             }, 300); // Match CSS transition duration
         },
 
-        openItemModal(productId) {
+        // --- COMBO SIZE SELECTION MODAL ---
+        openComboSizeModal(productId) {
             if (!app.isStoreOpen) {
                 app.showAlert('A loja está fechada e não é possível montar pedidos agora.', 'Loja Fechada', true);
                 return;
             }
+            app.selectedComboProductId = productId; // Store the combo ID
+            const product = app.products.find(p => p.id.toString() === productId.toString());
+            if (!product) return;
+
+            app.elements.comboSizeModalTitle.textContent = `Escolha o Tamanho para ${product.name}`;
+            app.elements.comboSizeModalBody.innerHTML = '';
+
+            app.cupSizes.forEach(size => {
+                const sizeOptionHtml = `
+                    <label class="flex items-center space-x-3 p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                        <input type="radio" name="combo_size" value="${size.name}" data-price="${size.price}" class="hidden">
+                        <div class="flex items-center w-full">
+                            <span class="mr-3 text-purple-400 text-xl"><i class="fas fa-mug-hot"></i></span>
+                            <div>
+                                <span class="font-semibold text-gray-300 block radio-title">${size.name}</span>
+                                <span class="text-sm text-gray-400">${app.formatCurrency(size.price)}</span>
+                            </div>
+                        </div>
+                    </label>
+                `;
+                app.elements.comboSizeModalBody.innerHTML += sizeOptionHtml;
+            });
+
+            // Enable/disable continue button based on selection
+            app.elements.comboSizeModalBody.querySelectorAll('input[name="combo_size"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    app.elements.selectComboSizeBtn.disabled = !document.querySelector('input[name="combo_size"]:checked');
+                });
+            });
+
+            app.elements.selectComboSizeBtn.disabled = true; // Initially disabled
+            app.elements.selectComboSizeBtn.onclick = () => {
+                const selectedSizeRadio = document.querySelector('input[name="combo_size"]:checked');
+                if (selectedSizeRadio) {
+                    const selectedSizeName = selectedSizeRadio.value;
+                    const selectedSizePrice = parseFloat(selectedSizeRadio.dataset.price);
+                    
+                    // Directly add the combo to the cart with selected size and price
+                    const comboProduct = app.products.find(p => p.id.toString() === app.selectedComboProductId.toString());
+                    if (comboProduct) {
+                        app.currentItem = {
+                            id: comboProduct.id,
+                            name: comboProduct.name,
+                            basePrice: selectedSizePrice, // Base price is the selected cup size price
+                            price: selectedSizePrice, // Final price is also the selected cup size price (no extra toppings)
+                            quantity: 1,
+                            toppings: [], // No additional toppings for this type of combo
+                            type: comboProduct.type,
+                            selectedSize: selectedSizeName,
+                            description: comboProduct.description // Keep original description for summary
+                        };
+                        app.addToCart(); // Add to cart
+                    }
+                    app.closeComboSizeModal(); // Close the size selection modal after adding to cart
+                }
+            };
+
+            app.openModal(app.elements.comboSizeModal);
+        },
+
+        closeComboSizeModal() {
+            app.closeModal(app.elements.comboSizeModal);
+            app.selectedComboProductId = null; // Clear the selected combo ID
+        },
+
+        // --- ITEM CUSTOMIZATION MODAL ---
+        openItemModal(productId, selectedBasePrice, selectedSizeName = '') {
             const product = app.products.find(p => p.id.toString() === productId.toString());
             if (!product) return;
             
+            // Set currentItem with the selected base price and size name
             app.currentItem = {
-                id: productId, name: product.name, basePrice: product.price, price: product.price, quantity: 1, toppings: [],
+                id: productId, 
+                name: product.name, 
+                basePrice: selectedBasePrice, 
+                price: selectedBasePrice, 
+                quantity: 1, 
+                toppings: [], 
+                type: product.type,
+                selectedSize: selectedSizeName // Store the selected size for combos
             };
 
-            app.elements.modalTitle.textContent = `Monte seu ${product.name}`;
+            // Adjust modal title if a size was selected for a combo
+            if (selectedSizeName) {
+                app.elements.modalTitle.textContent = `Monte seu ${product.name} (${selectedSizeName})`;
+            } else {
+                app.elements.modalTitle.textContent = `Monte seu ${product.name}`;
+            }
+            
             app.elements.modalBody.innerHTML = '';
 
             const warningNote = `<div class="bg-yellow-900/50 border-l-4 border-yellow-500 text-yellow-300 p-4 rounded-md" role="alert"><div class="flex"><div class="py-1"><i class="fas fa-info-circle mr-3"></i></div><div><p class="font-bold">Atenção!</p><p class="text-sm">Escolha seus adicionais com carinho. Nossos copos têm espaço limitado e talvez não seja possível incluir todos os itens selecionados.</p></div></div></div>`;
             app.elements.modalBody.innerHTML += warningNote;
+
+            // Display combo description if applicable
+            if (product.type === 'combo_selectable_size' && product.description) {
+                const comboDescriptionHtml = `<div class="bg-purple-900/50 border-l-4 border-purple-500 text-purple-300 p-4 rounded-md mb-4" role="alert"><p class="font-bold">Este combo sugere:</p><p class="text-sm">${product.description.replace('Sugestão: ', '')}</p></div>`;
+                app.elements.modalBody.innerHTML += comboDescriptionHtml;
+            }
 
             Object.entries(app.toppings).forEach(([key, category]) => {
                 const section = document.createElement('div');
@@ -919,11 +1078,19 @@
         // --- CART LOGIC ---
         addToCart() {
             const existingItemIndex = app.cart.findIndex(item => {
-                if (item.id !== app.currentItem.id || item.toppings.length !== app.currentItem.toppings.length) return false;
-                // Compare toppings by name for exact match
-                const currentToppingsNames = app.currentItem.toppings.map(t => t.name).sort().join(',');
-                const existingToppingsNames = item.toppings.map(t => t.name).sort().join(',');
-                return currentToppingsNames === existingToppingsNames;
+                // Check if it's the same product ID, same type, same size (if applicable), and the same set of toppings
+                if (item.id !== app.currentItem.id || item.type !== app.currentItem.type) return false;
+                if (item.type === 'combo_selectable_size' && item.selectedSize !== app.currentItem.selectedSize) return false;
+
+                // For base_acai, compare toppings. For combo_selectable_size, toppings will always be empty.
+                if (item.type === 'base_acai' && item.toppings.length !== app.currentItem.toppings.length) return false;
+                if (item.type === 'base_acai') {
+                    const currentToppingsString = app.currentItem.toppings.map(t => `${t.name}-${t.price}`).sort().join(',');
+                    const existingToppingsString = item.toppings.map(t => `${t.name}-${t.price}`).sort().join(',');
+                    return currentToppingsString === existingToppingsString;
+                }
+                
+                return true; // For combo_selectable_size, if ID and size match, it's the same item
             });
 
             if (existingItemIndex > -1) {
@@ -933,7 +1100,6 @@
             }
             
             app.saveCart();
-            app.closeItemModal();
             app.renderCart();
             app.updateCartIcon();
         },
@@ -1031,11 +1197,23 @@
 
             summary += `*ITENS DO PEDIDO:*\n------------------------\n`;
             app.cart.forEach(item => {
-                summary += `*${item.quantity}x ${item.name}*\n`;
-                if (item.toppings.length > 0) {
-                    item.toppings.forEach(t => { summary += `  - ${t.name}\n`; });
-                } else {
-                    summary += `  - Açaí puro\n`;
+                summary += `*${item.quantity}x ${item.name}*`;
+                // If it's a combo with selectable size, add its size and base description
+                if (item.type === 'combo_selectable_size' && item.selectedSize) {
+                    summary += ` (${item.selectedSize})`;
+                    if (item.description) {
+                        summary += ` - ${item.description.replace('Sugestão: ', '')}`;
+                    }
+                }
+                summary += `\n`;
+                if (item.type === 'base_acai') { // Only list toppings for base açaí
+                    if (item.toppings.length > 0) {
+                        item.toppings.forEach(t => { summary += `  - ${t.name}${t.price > 0 ? ` (+${app.formatCurrency(t.price)})` : ''}\n`; });
+                    } else {
+                        summary += `  - Açaí puro\n`;
+                    }
+                } else if (item.type === 'combo_selectable_size') {
+                    summary += `  - Sem adicionais nem complementos.\n`;
                 }
                 summary += `Subtotal: ${app.formatCurrency(item.price * item.quantity)}\n------------------------\n`;
             });
@@ -1188,21 +1366,44 @@
             `;
             app.elements.adminBody.innerHTML += settingsHTML;
 
-            // Section for Products (Tamanhos)
-            let productsHTML = `<div class="p-4 bg-gray-900/50 rounded-lg mt-6"><h4 class="text-xl font-bold text-purple-400 mb-4">Cardápio: Tamanhos (Produtos)</h4><div id="admin-products-list" class="space-y-3">`;
+            // Section for Products (Tamanhos and Combos)
+            let productsHTML = `<div class="p-4 bg-gray-900/50 rounded-lg mt-6"><h4 class="text-xl font-bold text-purple-400 mb-4">Cardápio: Produtos (Tamanhos e Combos)</h4><div id="admin-products-list" class="space-y-3">`;
             app.products.forEach((product, index) => {
+                const isComboSelectableSize = product.type === 'combo_selectable_size';
                 productsHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${product.id}">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${product.id}">
                         <input type="text" value="${product.name}" class="admin-name col-span-2 bg-gray-600 p-2 rounded-md border border-gray-500" placeholder="Nome do Produto">
-                        <input type="number" step="0.01" value="${product.price.toFixed(2)}" class="admin-price bg-gray-600 p-2 rounded-md border border-gray-500" placeholder="Preço">
+                        <input type="number" step="0.01" value="${product.price ? product.price.toFixed(2) : '0.00'}" class="admin-price bg-gray-600 p-2 rounded-md border border-gray-500 ${isComboSelectableSize ? 'hidden' : ''}" placeholder="Preço">
+                        <select class="admin-type bg-gray-600 p-2 rounded-md border border-gray-500">
+                            <option value="base_acai" ${product.type === 'base_acai' ? 'selected' : ''}>Açaí Base</option>
+                            <option value="combo_selectable_size" ${product.type === 'combo_selectable_size' ? 'selected' : ''}>Combo (Escolhe Tamanho)</option>
+                        </select>
                         <div class="flex items-center justify-between gap-2">
                             <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5" ${product.disabled ? 'checked' : ''}> Bloquear</label>
                             <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                         </div>
+                        <textarea class="admin-description col-span-full bg-gray-600 p-2 rounded-md border border-gray-500 ${isComboSelectableSize ? '' : 'hidden'}" placeholder="Descrição (para combos)">${product.description}</textarea>
                     </div>`;
             });
-            productsHTML += `</div><button onclick="app.addAdminItem('product')" class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-500 text-sm"><i class="fas fa-plus mr-2"></i>Adicionar Tamanho</button></div>`;
+            productsHTML += `</div><button onclick="app.addAdminItem('product')" class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-500 text-sm"><i class="fas fa-plus mr-2"></i>Adicionar Produto</button></div>`;
             app.elements.adminBody.innerHTML += productsHTML;
+
+            // Add event listeners for type change to toggle description and price fields
+            app.elements.adminBody.querySelectorAll('.admin-type').forEach(select => {
+                select.addEventListener('change', (event) => {
+                    const parentDiv = event.target.closest('.admin-item');
+                    const descriptionField = parentDiv.querySelector('.admin-description');
+                    const priceField = parentDiv.querySelector('.admin-price');
+                    if (event.target.value === 'combo_selectable_size') {
+                        descriptionField.classList.remove('hidden');
+                        priceField.classList.add('hidden'); // Hide price for combos with selectable size
+                    } else {
+                        descriptionField.classList.add('hidden');
+                        descriptionField.value = ''; // Clear description if changing to base_acai
+                        priceField.classList.remove('hidden'); // Show price for base açaí
+                    }
+                });
+            });
 
             // Section for Toppings
             let toppingsHTML = `<div class="p-4 bg-gray-900/50 rounded-lg mt-6"><h4 class="text-xl font-bold text-purple-400 mb-4">Cardápio: Complementos</h4>`;
@@ -1223,14 +1424,20 @@
         },
 
         addAdminItem(type, categoryKey = '') {
+            const newItemId = Date.now();
             const newItemHTML = (type === 'product')
-                ? `<div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${Date.now()}">
+                ? `<div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${newItemId}">
                        <input type="text" value="Novo Produto" class="admin-name col-span-2 bg-gray-600 p-2 rounded-md border border-gray-500">
                        <input type="number" step="0.01" value="0.00" class="admin-price bg-gray-600 p-2 rounded-md border border-gray-500">
+                       <select class="admin-type bg-gray-600 p-2 rounded-md border border-gray-500">
+                           <option value="base_acai" selected>Açaí Base</option>
+                           <option value="combo_selectable_size">Combo (Escolhe Tamanho)</option>
+                       </select>
                        <div class="flex items-center justify-between gap-2">
                            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5"> Bloquear</label>
                            <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                        </div>
+                       <textarea class="admin-description col-span-full bg-gray-600 p-2 rounded-md border border-gray-500 hidden" placeholder="Descrição (para combos)"></textarea>
                    </div>`
                 : `<div class="flex items-center gap-3 p-2 bg-gray-700 rounded-md admin-item" data-type="topping" data-category="${categoryKey}">
                        <input type="text" value="Novo Complemento" class="admin-name flex-grow bg-gray-600 p-2 rounded-md border border-gray-500">
@@ -1240,6 +1447,24 @@
             
             const containerId = (type === 'product') ? 'admin-products-list' : `admin-toppings-${categoryKey}`;
             document.getElementById(containerId).insertAdjacentHTML('beforeend', newItemHTML);
+
+            // If adding a product, add event listener for the new type select
+            if (type === 'product') {
+                const newSelect = document.querySelector(`#admin-products-list .admin-item[data-original-id="${newItemId}"] .admin-type`);
+                newSelect.addEventListener('change', (event) => {
+                    const parentDiv = event.target.closest('.admin-item');
+                    const descriptionField = parentDiv.querySelector('.admin-description');
+                    const priceField = parentDiv.querySelector('.admin-price');
+                    if (event.target.value === 'combo_selectable_size') {
+                        descriptionField.classList.remove('hidden');
+                        priceField.classList.add('hidden');
+                    } else {
+                        descriptionField.classList.add('hidden');
+                        descriptionField.value = '';
+                        priceField.classList.remove('hidden');
+                    }
+                });
+            }
         },
 
         removeAdminItem(button) {
@@ -1266,12 +1491,18 @@
             const newProducts = [];
             document.querySelectorAll('#admin-products-list .admin-item').forEach(item => {
                 const name = item.querySelector('.admin-name').value;
-                const price = parseFloat(item.querySelector('.admin-price').value);
+                const type = item.querySelector('.admin-type').value;
                 const disabled = item.querySelector('.admin-disabled').checked;
-                const originalId = parseInt(item.dataset.originalId); // Retrieve original ID if it exists
+                const description = item.querySelector('.admin-description').value;
+                const originalId = parseInt(item.dataset.originalId);
 
-                if (name && !isNaN(price)) {
-                    newProducts.push({ id: originalId || Date.now(), name, price, disabled });
+                let price = 0;
+                if (type === 'base_acai') {
+                    price = parseFloat(item.querySelector('.admin-price').value);
+                }
+                
+                if (name && (type === 'combo_selectable_size' || !isNaN(price))) {
+                    newProducts.push({ id: originalId || Date.now(), name, price, disabled, type, description });
                 }
             });
             localStorage.setItem(app.PRODUCTS_STORAGE_KEY, JSON.stringify(newProducts));
@@ -1356,7 +1587,12 @@
             app.checkStoreStatus(); // Initial check and setup
 
             // Event listeners
-            app.elements.addToCartBtn.addEventListener('click', app.addToCart);
+            // Modified to explicitly close item modal after adding to cart
+            app.elements.addToCartBtn.addEventListener('click', () => {
+                app.addToCart();
+                app.closeItemModal(); 
+            });
+
             app.elements.customerNameInput.addEventListener('input', app.saveCustomerInfo);
             app.elements.customerAddressInput.addEventListener('input', app.saveCustomerInfo);
             app.elements.neighborhoodSelect.addEventListener('change', () => {
