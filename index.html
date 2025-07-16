@@ -19,15 +19,15 @@
             width: 8px;
         }
         .modal-body::-webkit-scrollbar-track {
-            background: #1f2937; /* Dark gray for track */
+            background: #e5e7eb; /* gray-200 */
             border-radius: 10px;
         }
         .modal-body::-webkit-scrollbar-thumb {
-            background: #581c87; /* Purple for thumb */
+            background: #dc2626; /* red-600 */
             border-radius: 10px;
         }
         .modal-body::-webkit-scrollbar-thumb:hover {
-            background: #6b21a8; /* Darker purple on hover */
+            background: #b91c1c; /* red-700 */
         }
         /* Hide spin buttons for number inputs */
         input[type=number]::-webkit-inner-spin-button,
@@ -40,7 +40,7 @@
         }
         /* Style for disabled checkboxes */
         input[type="checkbox"]:disabled + span {
-            color: #6b7280; /* Gray out text */
+            color: #9ca3af; /* gray-400 */
             cursor: not-allowed;
         }
         /* Transition for alert modal */
@@ -49,11 +49,11 @@
         }
         /* Highlight radio button title when checked */
         input[type="radio"]:checked + div > .radio-title {
-            color: #c084fc; /* Light purple */
+            color: #ef4444; /* red-500 */
         }
         /* Custom style for time input icon to make it visible on dark background */
         input[type="time"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.8); /* Invert colors to make it lighter */
+            filter: invert(0.2); /* Invert colors to make it darker on light background */
         }
         /* Base styles for modals to enable transitions */
         .modal {
@@ -69,19 +69,20 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header Section -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-sm p-4 sm:p-6 rounded-b-2xl shadow-lg border-b border-gray-200">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-orange-700">SABOR AÇAÍTERIA</h1>
+            <p class="text-md md:text-lg mt-1 text-gray-700 opacity-90 flex items-center justify-center">
+                <i class="fas fa-clock mr-2"></i> <span id="store-hours-display-text">Carregando horário...</span>
+                <span id="store-status-indicator" class="ml-2 px-3 py-1 text-xs rounded-full"></span>
+            </p>
+        </div>
+    </header>
 
     <div class="container mx-auto p-4 sm:p-8 max-w-4xl">
-
-        <!-- Header Section -->
-        <header class="text-center mb-8 p-6 rounded-2xl bg-gradient-to-tr from-black to-gray-800 text-white shadow-lg">
-            <h1 class="text-5xl md:text-6xl font-black tracking-tight text-amber-400">SABOR AÇAÍTERIA</h1>
-            <p class="text-lg md:text-xl mt-2 text-gray-300 opacity-90">Monte seu pedido online de forma fácil e rápida!</p>
-            <p id="store-hours-display" class="text-md md:text-lg mt-3 text-gray-300 opacity-90 bg-white/10 rounded-full px-4 py-1 inline-flex items-center justify-center">
-                <i class="fas fa-clock mr-2"></i> <span>Carregando horário...</span>
-                <span id="store-status-indicator" class="ml-2 px-3 py-1 text-sm rounded-full"></span>
-            </p>
-        </header>
 
         <!-- Store Status and Delivery Time Banners -->
         <div id="store-status-banner" class="hidden"></div>
@@ -89,8 +90,8 @@
 
         <!-- Main Content Area - Product List -->
         <main class="space-y-8">
-            <section id="tamanhos" class="bg-gray-800 p-6 rounded-2xl shadow-md">
-                <h2 class="text-3xl font-bold text-purple-400 mb-4 border-b-2 border-purple-800 pb-2">Escolha o Tamanho</h2>
+            <section id="tamanhos" class="bg-white p-6 rounded-2xl shadow-md">
+                <h2 class="text-3xl font-bold text-red-600 mb-4 border-b-2 border-gray-200 pb-2">Escolha o Tamanho</h2>
                 <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <!-- Product cards will be rendered here by JavaScript -->
                 </div>
@@ -99,22 +100,22 @@
 
         <!-- Footer Section -->
         <footer class="text-center mt-10 space-y-4">
-            <div class="bg-gray-800 p-4 rounded-2xl shadow-md border-2 border-gray-700">
-                 <h3 class="text-lg font-bold text-purple-400 mb-2 flex items-center justify-center gap-2">
+            <div class="bg-white p-4 rounded-2xl shadow-md border-2 border-gray-200">
+                 <h3 class="text-lg font-bold text-red-600 mb-2 flex items-center justify-center gap-2">
                     <i class="fas fa-map-marker-alt"></i>
                     Nosso Endereço
                 </h3>
-                 <p id="store-address-display" class="text-gray-300 text-base">
+                 <p id="store-address-display" class="text-gray-800 text-base">
                     Carregando endereço...
                 </p>
             </div>
-            <div class="text-gray-400 pt-2">
+            <div class="text-gray-600 pt-2">
                 <p>Siga-nos no Instagram: 
-                    <a href="https://www.instagram.com/sabor_acaiteria/profilecard/?igsh=NjF2ZWMwNHNiNzI0" target="_blank" class="font-semibold text-purple-400 hover:underline">@sabor_acaiteria</a>
+                    <a href="https://www.instagram.com/sabor_acaiteria/profilecard/?igsh=NjF2ZWMwNHNiNzI0" target="_blank" class="font-semibold text-red-600 hover:underline">@sabor_acaiteria</a>
                 </p>
             </div>
             <div class="mt-6">
-                 <a href="#" onclick="app.openAdminPanel(event)" class="inline-block bg-amber-400 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-500 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                 <a href="#" onclick="app.openAdminPanel(event)" class="inline-block bg-gray-200 text-orange-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                     <i class="fas fa-user-shield mr-2"></i>Painel do Administrador
                 </a>
             </div>
@@ -130,24 +131,24 @@
 
     <!-- Cart Floating Button -->
     <div id="cart-button" class="fixed bottom-5 right-5 z-50 hidden">
-        <button onclick="app.toggleCartModal()" class="bg-purple-600 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-purple-700 transition-transform transform hover:scale-110">
+        <button onclick="app.toggleCartModal()" class="bg-red-600 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-red-700 transition-transform transform hover:scale-110">
             <i class="fas fa-shopping-cart text-2xl"></i>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">0</span>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-white text-red-600 text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center border-2 border-red-600">0</span>
         </button>
     </div>
 
     <!-- Combo Size Selection Modal -->
     <div id="combo-size-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <h3 id="combo-size-modal-title" class="text-2xl font-bold text-purple-400">Escolha o Tamanho do Combo</h3>
-                <button onclick="app.closeComboSizeModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 id="combo-size-modal-title" class="text-2xl font-bold text-red-600">Escolha o Tamanho do Combo</h3>
+                <button onclick="app.closeComboSizeModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div id="combo-size-modal-body" class="p-6 space-y-4 overflow-y-auto modal-body">
                 <!-- Size options will be rendered here by JavaScript -->
             </div>
-            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-end">
-                <button id="select-combo-size-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center gap-2" disabled>
+            <div class="p-4 bg-gray-100 border-t border-gray-200 flex justify-end">
+                <button id="select-combo-size-btn" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-all flex items-center gap-2" disabled>
                     <i class="fas fa-arrow-right"></i> Continuar
                 </button>
             </div>
@@ -156,20 +157,20 @@
 
     <!-- Item Customization Modal -->
     <div id="item-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <h3 id="modal-title" class="text-2xl font-bold text-purple-400">Monte seu Açaí</h3>
-                <button onclick="app.closeItemModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 id="modal-title" class="text-2xl font-bold text-red-600">Monte seu Açaí</h3>
+                <button onclick="app.closeItemModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div id="modal-body" class="p-6 space-y-6 overflow-y-auto modal-body">
                 <!-- Topping options will be rendered here by JavaScript -->
             </div>
-            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-between items-center">
+            <div class="p-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
                 <div>
-                    <span class="text-lg font-medium text-gray-300">Total do Item:</span>
-                    <span id="modal-item-total" class="text-2xl font-bold text-purple-400 ml-2">R$ 0,00</span>
+                    <span class="text-lg font-medium text-gray-800">Total do Item:</span>
+                    <span id="modal-item-total" class="text-2xl font-bold text-red-600 ml-2">R$ 0,00</span>
                 </div>
-                <button id="add-to-cart-btn" class="bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center gap-2">
+                <button id="add-to-cart-btn" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-all flex items-center gap-2">
                     <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
                 </button>
             </div>
@@ -178,51 +179,51 @@
 
     <!-- Cart Modal -->
     <div id="cart-modal" class="modal fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
-         <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-purple-400">Seu Carrinho e Pedido</h3>
-                <button onclick="app.toggleCartModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+         <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-red-600">Seu Carrinho e Pedido</h3>
+                <button onclick="app.toggleCartModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div class="p-6 space-y-6 overflow-y-auto modal-body">
                 <div id="cart-items-container"></div>
-                <div id="cart-summary-details" class="pt-4 mt-4 border-t border-gray-700 space-y-2 hidden">
-                     <div class="flex justify-between text-gray-400">
+                <div id="cart-summary-details" class="pt-4 mt-4 border-t border-gray-200 space-y-2 hidden">
+                     <div class="flex justify-between text-gray-600">
                          <span>Subtotal</span>
                          <span id="cart-subtotal">R$ 0,00</span>
                      </div>
-                     <div class="flex justify-between text-gray-400">
+                     <div class="flex justify-between text-gray-600">
                          <span>Taxa de Entrega</span>
                          <span id="cart-delivery-fee">R$ 0,00</span>
                      </div>
                 </div>
-                <div id="checkout-form" class="space-y-4 pt-6 border-t border-gray-700 hidden">
-                    <h4 class="text-xl font-bold text-gray-200">Informações do Pedido</h4>
+                <div id="checkout-form" class="space-y-4 pt-6 border-t border-gray-200 hidden">
+                    <h4 class="text-xl font-bold text-gray-900">Informações do Pedido</h4>
                     <div id="delivery-options">
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <label id="delivery-option-delivery" class="flex-1 flex items-center p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                            <label id="delivery-option-delivery" class="flex-1 flex items-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer has-[:checked]:border-red-500 has-[:checked]:bg-red-100">
                                 <input type="radio" name="delivery_option" value="delivery" class="hidden" checked>
                                 <div class="flex items-center">
-                                    <span class="mr-3"><i class="fas fa-motorcycle text-xl text-purple-400"></i></span>
-                                    <div><span class="font-semibold text-gray-300 block radio-title">Delivery (Entrega)</span><span class="text-sm text-gray-500">20-60 min</span></div>
+                                    <span class="mr-3"><i class="fas fa-motorcycle text-xl text-red-500"></i></span>
+                                    <div><span class="font-semibold text-gray-800 block radio-title">Delivery (Entrega)</span><span class="text-sm text-gray-500">20-60 min</span></div>
                                 </div>
                             </label>
-                            <label id="delivery-option-takeout" class="flex-1 flex items-center p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                            <label id="delivery-option-takeout" class="flex-1 flex items-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer has-[:checked]:border-red-500 has-[:checked]:bg-red-100">
                                 <input type="radio" name="delivery_option" value="takeout" class="hidden">
                                 <div class="flex items-center">
-                                    <span class="mr-3"><i class="fas fa-store text-xl text-purple-400"></i></span>
-                                    <div><span class="font-semibold text-gray-300 block radio-title">Retirar na Loja</span><span class="text-sm text-gray-500">20-30 min</span></div>
+                                    <span class="mr-3"><i class="fas fa-store text-xl text-red-500"></i></span>
+                                    <div><span class="font-semibold text-gray-800 block radio-title">Retirar na Loja</span><span class="text-sm text-gray-500">20-30 min</span></div>
                                 </div>
                             </label>
                         </div>
                     </div>
                     <div>
-                        <label for="customer-name" class="block text-sm font-medium text-gray-400">Seu Nome</label>
-                        <input type="text" id="customer-name" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" required>
+                        <label for="customer-name" class="block text-sm font-medium text-gray-600">Seu Nome</label>
+                        <input type="text" id="customer-name" class="mt-1 block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" required>
                     </div>
                     <div id="delivery-fields" class="space-y-4">
                          <div>
-                            <label for="neighborhood" class="block text-sm font-medium text-gray-400">Selecione o Bairro</label>
-                            <select id="neighborhood" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base">
+                            <label for="neighborhood" class="block text-sm font-medium text-gray-600">Selecione o Bairro</label>
+                            <select id="neighborhood" class="mt-1 block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base">
                                 <option value="" data-fee="0">-- Escolha uma opção --</option>
                                 <option value="Jardim Europa" data-fee="9.00">Jardim Europa (R$ 9,00)</option>
                                 <option value="Amec" data-fee="9.00">Amec (R$ 9,00)</option>
@@ -236,32 +237,32 @@
                             </select>
                         </div>
                         <div>
-                            <label for="customer-address" class="block text-sm font-medium text-gray-400">Endereço Completo (Rua, Número, Complemento)</label>
-                            <input type="text" id="customer-address" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" placeholder="Ex: Rua das Flores, 123, apt 4" required>
+                            <label for="customer-address" class="block text-sm font-medium text-gray-600">Endereço Completo (Rua, Número, Complemento)</label>
+                            <input type="text" id="customer-address" class="mt-1 block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" placeholder="Ex: Rua das Flores, 123, apt 4" required>
                         </div>
                     </div>
                      <div>
-                        <label for="payment-method" class="block text-sm font-medium text-gray-400">Forma de Pagamento</label>
-                        <select id="payment-method" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base">
+                        <label for="payment-method" class="block text-sm font-medium text-gray-600">Forma de Pagamento</label>
+                        <select id="payment-method" class="mt-1 block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base">
                             <option>Pix</option>
                             <option>Cartão de Crédito (na entrega)</option>
                             <option>Cartão de Débito (na entrega)</option>
                             <option>Dinheiro</option>
                         </select>
-                        <p class="text-xs text-yellow-400 mt-2"><i class="fas fa-info-circle mr-1"></i>Observação: não aceitamos VR e vales refeição no momento.</p>
+                        <p class="text-xs text-yellow-700 mt-2"><i class="fas fa-info-circle mr-1"></i>Observação: não aceitamos VR e vales refeição no momento.</p>
                     </div>
                      <div>
-                        <label for="observations" class="block text-sm font-medium text-gray-400">Observações</label>
-                        <textarea id="observations" rows="3" class="mt-1 block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" placeholder="Ex: Troco para R$50, sem cebola, etc."></textarea>
+                        <label for="observations" class="block text-sm font-medium text-gray-600">Observações</label>
+                        <textarea id="observations" rows="3" class="mt-1 block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" placeholder="Ex: Troco para R$50, sem cebola, etc."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="p-4 bg-gray-900 border-t border-gray-700 flex justify-between items-center">
+            <div class="p-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
                  <div>
-                    <span class="text-lg font-medium text-gray-300">Total do Pedido:</span>
-                    <span id="cart-total" class="text-2xl font-bold text-purple-400 ml-2">R$ 0,00</span>
+                    <span class="text-lg font-medium text-gray-800">Total do Pedido:</span>
+                    <span id="cart-total" class="text-2xl font-bold text-red-600 ml-2">R$ 0,00</span>
                 </div>
-                <button onclick="app.finalizeOrder()" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all flex items-center gap-2">
+                <button onclick="app.finalizeOrder()" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-all flex items-center gap-2">
                     <i class="fab fa-whatsapp"></i> Finalizar Pedido
                 </button>
             </div>
@@ -270,50 +271,50 @@
 
     <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-lg text-center p-8">
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-lg text-center p-8">
             <div id="confirmation-icon"><i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i></div>
-            <h3 id="confirmation-title" class="text-2xl font-bold text-gray-100 mb-2">Pedido Recebido!</h3>
-            <p id="confirmation-message" class="text-gray-400 mb-6">Seu pedido foi gerado! Clique no botão abaixo para encaminhá-lo para o WhatsApp da loja e finalizar a compra.</p>
-            <div id="order-summary" class="text-left bg-gray-700 p-4 rounded-lg mb-6 max-h-60 overflow-y-auto modal-body"></div>
+            <h3 id="confirmation-title" class="text-2xl font-bold text-gray-900 mb-2">Pedido Recebido!</h3>
+            <p id="confirmation-message" class="text-gray-600 mb-6">Seu pedido foi gerado! Clique no botão abaixo para encaminhá-lo para o WhatsApp da loja e finalizar a compra.</p>
+            <div id="order-summary" class="text-left bg-gray-100 p-4 rounded-lg mb-6 max-h-60 overflow-y-auto modal-body"></div>
             <div id="initial-confirm-buttons" class="flex flex-col sm:flex-row gap-4 justify-center">
                  <button onclick="app.sendOrderViaWhatsApp()" class="w-full bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-all flex items-center justify-center gap-2">
                     <i class="fab fa-whatsapp"></i> Enviar Pedido
                 </button>
-                <button onclick="app.closeConfirmationModal()" class="w-full bg-gray-600 text-gray-100 font-bold py-3 px-6 rounded-lg hover:bg-gray-500 transition-all">Fechar</button>
+                <button onclick="app.closeConfirmationModal()" class="w-full bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-400 transition-all">Fechar</button>
             </div>
             <div id="post-send-buttons" class="hidden flex-col gap-4 justify-center">
-                 <p class="text-sm text-yellow-400 mb-4">Após enviar a mensagem no WhatsApp, confirme abaixo para limpar seu carrinho.</p>
+                 <p class="text-sm text-yellow-700 mb-4">Após enviar a mensagem no WhatsApp, confirme abaixo para limpar seu carrinho.</p>
                  <button onclick="app.confirmOrderSent()" class="w-full bg-teal-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-600 transition-all flex items-center justify-center gap-2">
                     <i class="fas fa-check-square"></i> Pedido Enviado, Limpar Carrinho
                 </button>
-                <button onclick="app.closeConfirmationModal()" class="w-full bg-gray-600 text-gray-100 font-bold py-3 px-6 rounded-lg hover:bg-gray-500 transition-all">Manter Carrinho e Fechar</button>
+                <button onclick="app.closeConfirmationModal()" class="w-full bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-400 transition-all">Manter Carrinho e Fechar</button>
             </div>
         </div>
     </div>
     
     <!-- Alert Modal -->
     <div id="alert-modal" class="alert-modal fixed inset-0 bg-black bg-opacity-60 z-[60] hidden items-center justify-center p-4 opacity-0">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6 transform scale-95 transition-transform">
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6 transform scale-95 transition-transform">
             <div id="alert-icon" class="mx-auto mb-4"></div>
-            <h3 id="alert-title" class="text-xl font-bold text-gray-100 mb-2">Atenção!</h3>
-            <p id="alert-message" class="text-gray-400 mb-6">Mensagem de alerta.</p>
-            <button onclick="app.closeAlertModal()" class="w-full bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 transition-all">OK</button>
+            <h3 id="alert-title" class="text-xl font-bold text-gray-900 mb-2">Atenção!</h3>
+            <p id="alert-message" class="text-gray-600 mb-6">Mensagem de alerta.</p>
+            <button onclick="app.closeAlertModal()" class="w-full bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-all">OK</button>
         </div>
     </div>
 
     <!-- Admin Panel Modal -->
     <div id="admin-modal" class="modal fixed inset-0 bg-black bg-opacity-80 z-[70] hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-amber-400"><i class="fas fa-user-shield mr-2"></i>Painel do Administrador</h3>
-                <button onclick="app.closeAdminModal()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-orange-700"><i class="fas fa-user-shield mr-2"></i>Painel do Administrador</h3>
+                <button onclick="app.closeAdminModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <div id="admin-body" class="p-6 space-y-6 overflow-y-auto modal-body">
                 <!-- Admin panel content will be rendered here by JavaScript -->
             </div>
-            <div class="p-4 bg-gray-900 border-t border-gray-700 flex flex-wrap justify-between items-center gap-4">
+            <div class="p-4 bg-gray-100 border-t border-gray-200 flex flex-wrap justify-between items-center gap-4">
                 <div class="flex gap-4">
-                    <button onclick="app.saveAdminChanges()" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition-all flex items-center gap-2">
+                    <button onclick="app.saveAdminChanges()" class="bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition-all flex items-center gap-2">
                         <i class="fas fa-save"></i> Salvar Alterações
                     </button>
                     <button onclick="app.resetToDefaults()" class="bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 transition-all flex items-center gap-2 text-sm">
@@ -326,25 +327,25 @@
 
     <!-- Admin Password Modal -->
     <div id="password-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-[80] hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6">
-            <h3 class="text-xl font-bold text-amber-400 mb-4">Acesso Restrito</h3>
-            <p class="text-gray-400 mb-4">Por favor, insira a senha de administrador.</p>
-            <input type="password" id="admin-password-input" class="block w-full bg-gray-700 border-2 border-gray-600 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 p-3 text-base" placeholder="Senha">
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6">
+            <h3 class="text-xl font-bold text-orange-700 mb-4">Acesso Restrito</h3>
+            <p class="text-gray-600 mb-4">Por favor, insira a senha de administrador.</p>
+            <input type="password" id="admin-password-input" class="block w-full bg-gray-100 border-2 border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" placeholder="Senha">
             <div class="mt-6 flex gap-4">
-                <button onclick="app.closePasswordModal()" class="w-full bg-gray-600 text-gray-100 font-bold py-2 px-6 rounded-lg hover:bg-gray-500 transition-all">Cancelar</button>
-                <button onclick="app.checkAdminPassword()" class="w-full bg-purple-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-purple-700 transition-all">Entrar</button>
+                <button onclick="app.closePasswordModal()" class="w-full bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-all">Cancelar</button>
+                <button onclick="app.checkAdminPassword()" class="w-full bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-all">Entrar</button>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Action Modal (Generic) -->
     <div id="confirm-action-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-[80] hidden items-center justify-center p-4">
-        <div class="bg-gray-800 text-gray-200 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6">
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-sm text-center p-6">
             <div id="confirm-action-icon" class="mx-auto mb-4"><i class="fas fa-exclamation-triangle text-yellow-500 text-5xl"></i></div>
-            <h3 id="confirm-action-title" class="text-xl font-bold text-gray-100 mb-2">Confirmar Ação</h3>
-            <p id="confirm-action-message" class="text-gray-400 mb-6">Você tem certeza?</p>
+            <h3 id="confirm-action-title" class="text-xl font-bold text-gray-900 mb-2">Confirmar Ação</h3>
+            <p id="confirm-action-message" class="text-gray-600 mb-6">Você tem certeza?</p>
             <div class="mt-6 flex gap-4">
-                <button id="confirm-action-cancel-btn" class="w-full bg-gray-600 text-gray-100 font-bold py-2 px-6 rounded-lg hover:bg-gray-500 transition-all">Cancelar</button>
+                <button id="confirm-action-cancel-btn" class="w-full bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-all">Cancelar</button>
                 <button id="confirm-action-confirm-btn" class="w-full bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-all">Confirmar</button>
             </div>
         </div>
@@ -458,7 +459,7 @@
             adminPasswordInput: document.getElementById('admin-password-input'),
             confirmActionModal: document.getElementById('confirm-action-modal'),
             deliveryTimeBanner: document.getElementById('delivery-time-banner'),
-            storeHoursDisplay: document.getElementById('store-hours-display'),
+            storeHoursDisplayText: document.getElementById('store-hours-display-text'), // Adjusted selector
             storeStatusIndicator: document.getElementById('store-status-indicator'),
             storeStatusBanner: document.getElementById('store-status-banner'),
             modalTitle: document.getElementById('modal-title'),
@@ -576,7 +577,7 @@
                 }
             }
             
-            app.elements.storeHoursDisplay.querySelector('span').textContent = `${app.adminSettings.openingTime} às ${app.adminSettings.closingTime} (${daysString})`;
+            app.elements.storeHoursDisplayText.textContent = `${app.adminSettings.openingTime} às ${app.adminSettings.closingTime} (${daysString})`;
         },
 
         checkStoreStatus() {
@@ -624,14 +625,14 @@
             // Update store status indicator and banner
             if (app.isStoreOpen) {
                 app.elements.storeStatusIndicator.textContent = 'Aberto';
-                app.elements.storeStatusIndicator.className = 'ml-2 px-3 py-1 text-sm rounded-full bg-green-500 text-white font-bold';
+                app.elements.storeStatusIndicator.className = 'ml-2 px-3 py-1 text-xs rounded-full bg-green-500 text-white font-bold';
                 app.elements.storeStatusBanner.innerHTML = '';
                 app.elements.storeStatusBanner.classList.add('hidden');
             } else {
                 app.elements.storeStatusIndicator.textContent = 'Fechado';
-                app.elements.storeStatusIndicator.className = 'ml-2 px-3 py-1 text-sm rounded-full bg-red-500 text-white font-bold';
+                app.elements.storeStatusIndicator.className = 'ml-2 px-3 py-1 text-xs rounded-full bg-red-500 text-white font-bold';
                 app.elements.storeStatusBanner.innerHTML = `
-                    <div class="bg-red-900/50 border-l-4 border-red-500 text-red-300 p-4 rounded-md mb-8 text-center" role="alert">
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-8 text-center" role="alert">
                         <p class="font-bold text-lg">No momento estamos fechados!</p>
                         <p class="text-sm">Você pode navegar pelo cardápio, mas os pedidos estão suspensos.</p>
                     </div>
@@ -645,7 +646,7 @@
             // Update delivery time banner
             if (!app.isDeliveryTime && app.isStoreOpen && (app.adminSettings.deliveryMode === 'both' || app.adminSettings.deliveryMode === 'delivery')) {
                 app.elements.deliveryTimeBanner.innerHTML = `
-                    <div class="bg-blue-900/50 border-l-4 border-blue-500 text-blue-300 p-4 rounded-md mb-8 text-center" role="alert">
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-8 text-center" role="alert">
                         <p class="font-bold text-lg">Entregas começam a partir das ${deliveryStartTimeStr}h!</p>
                         <p class="text-sm">Você ainda pode fazer pedidos para retirar na loja.</p>
                     </div>
@@ -671,13 +672,13 @@
 
                 // Conditional classes for the product card
                 const cardClasses = isDisabled
-                    ? "bg-gray-900 border border-gray-800 rounded-xl p-4 text-center transition-all cursor-not-allowed flex flex-col justify-between opacity-60"
-                    : "bg-gray-800 border border-gray-700 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer flex flex-col justify-between";
+                    ? "bg-gray-100 border border-gray-200 rounded-xl p-4 text-center transition-all cursor-not-allowed flex flex-col justify-between opacity-60"
+                    : "bg-white border border-gray-200 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-red-500 cursor-pointer flex flex-col justify-between";
                 
                 // Conditional classes for the button
                 const buttonClasses = isDisabled
-                    ? "mt-4 bg-gray-600 text-gray-400 font-semibold py-2 px-4 rounded-lg cursor-not-allowed w-full"
-                    : "mt-4 bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-500 transition-all w-full";
+                    ? "mt-4 bg-gray-300 text-gray-600 font-semibold py-2 px-4 rounded-lg cursor-not-allowed w-full"
+                    : "mt-4 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-all w-full";
                 
                 // Conditional text for the button
                 const buttonText = isDisabled ? "Em Breve" : "Montar";
@@ -693,9 +694,9 @@
                 }
                 
                 // Conditional text colors for name and price
-                const nameColor = isDisabled ? "text-gray-400" : "text-gray-100";
-                const priceColor = isDisabled ? "text-gray-500" : "text-purple-400";
-                const descriptionColor = isDisabled ? "text-gray-500" : "text-gray-400";
+                const nameColor = isDisabled ? "text-gray-600" : "text-gray-900";
+                const priceColor = isDisabled ? "text-gray-500" : "text-red-600";
+                const descriptionColor = isDisabled ? "text-gray-500" : "text-gray-600";
 
                 // Display price only for base açaí, not for combos as their price is chosen later
                 const priceDisplay = product.type === 'base_acai' ? `<p class="text-2xl font-semibold ${priceColor} mt-2">${app.formatCurrency(product.price)}</p>` : `<p class="text-xl font-semibold ${priceColor} mt-2">A partir de ${app.formatCurrency(app.cupSizes[0].price)}</p>`;
@@ -736,19 +737,19 @@
                     
 
                     return `
-                        <div class="flex items-start justify-between p-4 border-b border-gray-700">
+                        <div class="flex items-start justify-between p-4 border-b border-gray-200">
                             <div>
-                                <p class="font-bold text-lg text-gray-100">${item.name} (x${item.quantity})</p>
-                                <div class="text-sm text-gray-400 pl-2 mt-1">
+                                <p class="font-bold text-lg text-gray-900">${item.name} (x${item.quantity})</p>
+                                <div class="text-sm text-gray-600 pl-2 mt-1">
                                     ${toppingsDisplay}
                                 </div>
                             </div>
                             <div class="text-right">
-                                <p class="font-bold text-lg text-purple-400">${app.formatCurrency(item.price * item.quantity)}</p>
+                                <p class="font-bold text-lg text-red-600">${app.formatCurrency(item.price * item.quantity)}</p>
                                 <div class="flex items-center gap-2 mt-2">
-                                    <button onclick="app.updateQuantity(${index}, -1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
+                                    <button onclick="app.updateQuantity(${index}, -1)" class="bg-gray-200 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">-</button>
                                     <span class="font-bold w-5 text-center">${item.quantity}</span>
-                                    <button onclick="app.updateQuantity(${index}, 1)" class="bg-gray-700 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
+                                    <button onclick="app.updateQuantity(${index}, 1)" class="bg-gray-200 w-7 h-7 rounded-full font-bold text-lg flex items-center justify-center">+</button>
                                     <button onclick="app.removeFromCart(${index})" class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
@@ -898,13 +899,13 @@
 
             app.cupSizes.forEach(size => {
                 const sizeOptionHtml = `
-                    <label class="flex items-center space-x-3 p-3 border-2 border-gray-600 rounded-lg cursor-pointer has-[:checked]:border-purple-500 has-[:checked]:bg-purple-900/50">
+                    <label class="flex items-center space-x-3 p-3 border-2 border-gray-300 rounded-lg cursor-pointer has-[:checked]:border-red-500 has-[:checked]:bg-red-100">
                         <input type="radio" name="combo_size" value="${size.name}" data-price="${size.price}" class="hidden">
                         <div class="flex items-center w-full">
-                            <span class="mr-3 text-purple-400 text-xl"><i class="fas fa-mug-hot"></i></span>
+                            <span class="mr-3 text-red-600 text-xl"><i class="fas fa-mug-hot"></i></span>
                             <div>
-                                <span class="font-semibold text-gray-300 block radio-title">${size.name}</span>
-                                <span class="text-sm text-gray-400">${app.formatCurrency(size.price)}</span>
+                                <span class="font-semibold text-gray-800 block radio-title">${size.name}</span>
+                                <span class="text-sm text-gray-600">${app.formatCurrency(size.price)}</span>
                             </div>
                         </div>
                     </label>
@@ -980,12 +981,12 @@
             
             app.elements.modalBody.innerHTML = '';
 
-            const warningNote = `<div class="bg-yellow-900/50 border-l-4 border-yellow-500 text-yellow-300 p-4 rounded-md" role="alert"><div class="flex"><div class="py-1"><i class="fas fa-info-circle mr-3"></i></div><div><p class="font-bold">Atenção!</p><p class="text-sm">Escolha seus adicionais com carinho. Nossos copos têm espaço limitado e talvez não seja possível incluir todos os itens selecionados.</p></div></div></div>`;
+            const warningNote = `<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md" role="alert"><div class="flex"><div class="py-1"><i class="fas fa-info-circle mr-3"></i></div><div><p class="font-bold">Atenção!</p><p class="text-sm">Escolha seus adicionais com carinho. Nossos copos têm espaço limitado e talvez não seja possível incluir todos os itens selecionados.</p></div></div></div>`;
             app.elements.modalBody.innerHTML += warningNote;
 
             // Display combo description if applicable
             if (product.type === 'combo_selectable_size' && product.description) {
-                const comboDescriptionHtml = `<div class="bg-purple-900/50 border-l-4 border-purple-500 text-purple-300 p-4 rounded-md mb-4" role="alert"><p class="font-bold">Este combo sugere:</p><p class="text-sm">${product.description.replace('Sugestão: ', '')}</p></div>`;
+                const comboDescriptionHtml = `<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-4" role="alert"><p class="font-bold">Este combo sugere:</p><p class="text-sm">${product.description.replace('Sugestão: ', '')}</p></div>`;
                 app.elements.modalBody.innerHTML += comboDescriptionHtml;
             }
 
@@ -994,14 +995,14 @@
                 let itemsHTML = category.items
                     .filter(item => !item.disabled) // Filter out disabled items
                     .map(item => `
-                    <label class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-700 cursor-pointer">
-                        <input type="checkbox" class="h-5 w-5 rounded border-gray-500 bg-gray-600 text-purple-600 focus:ring-purple-500" name="${key}" value="${item.name}" data-price="${category.price || 0}">
-                        <span class="text-gray-300">${item.name}</span>
+                    <label class="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 cursor-pointer">
+                        <input type="checkbox" class="h-5 w-5 rounded border-gray-400 bg-gray-200 text-red-600 focus:ring-red-500" name="${key}" value="${item.name}" data-price="${category.price || 0}">
+                        <span class="text-gray-800">${item.name}</span>
                     </label>
                 `).join('');
                 
                 if (itemsHTML.length > 0) {
-                    section.innerHTML = `<h4 class="text-lg font-bold text-gray-200 mb-2 pb-1 border-b border-gray-600">${category.title}</h4><div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${itemsHTML}</div>`;
+                    section.innerHTML = `<h4 class="text-lg font-bold text-gray-900 mb-2 pb-1 border-b border-gray-300">${category.title}</h4><div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${itemsHTML}</div>`;
                     app.elements.modalBody.appendChild(section);
                 }
             });
@@ -1081,8 +1082,8 @@
                 if (item.type === 'combo_selectable_size' && item.selectedSize !== app.currentItem.selectedSize) return false;
 
                 // For base_acai, compare toppings. For combo_selectable_size, toppings will always be empty.
-                if (item.type === 'base_acai' && item.toppings.length !== app.currentItem.toppings.length) return false;
                 if (item.type === 'base_acai') {
+                    if (item.toppings.length !== app.currentItem.toppings.length) return false;
                     const currentToppingsString = app.currentItem.toppings.map(t => `${t.name}-${t.price}`).sort().join(',');
                     const existingToppingsString = item.toppings.map(t => `${t.name}-${t.price}`).sort().join(',');
                     return currentToppingsString === existingToppingsString;
@@ -1288,72 +1289,72 @@
             // Section for Store Settings
             const daysOfWeek = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
             let daysCheckboxesHTML = daysOfWeek.map((day, index) => `
-                <label class="flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-700 cursor-pointer">
-                    <input type="checkbox" name="admin_open_day" value="${index}" class="h-4 w-4 rounded text-purple-600 focus:ring-purple-500" ${app.adminSettings.openDays.includes(index) ? 'checked' : ''}>
+                <label class="flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-100 cursor-pointer">
+                    <input type="checkbox" name="admin_open_day" value="${index}" class="h-4 w-4 rounded text-red-600 focus:ring-red-500" ${app.adminSettings.openDays.includes(index) ? 'checked' : ''}>
                     <span>${day}</span>
                 </label>
             `).join('');
 
             let settingsHTML = `
-                <div class="p-4 bg-gray-900/50 rounded-lg">
-                    <h4 class="text-xl font-bold text-purple-400 mb-4">Configurações Gerais</h4>
+                <div class="p-4 bg-gray-100 rounded-lg">
+                    <h4 class="text-xl font-bold text-red-600 mb-4">Configurações Gerais</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                          <div>
-                            <label for="admin-whatsapp-number" class="block text-sm font-medium text-gray-300 mb-1">Número do WhatsApp</label>
-                            <input type="text" id="admin-whatsapp-number" value="${app.adminSettings.whatsappNumber}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full" placeholder="Ex: 5511999998888">
+                            <label for="admin-whatsapp-number" class="block text-sm font-medium text-gray-800 mb-1">Número do WhatsApp</label>
+                            <input type="text" id="admin-whatsapp-number" value="${app.adminSettings.whatsappNumber}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full" placeholder="Ex: 5511999998888">
                         </div>
                          <div>
-                            <label for="admin-address" class="block text-sm font-medium text-gray-300 mb-1">Endereço da Loja</label>
-                            <input type="text" id="admin-address" value="${app.adminSettings.address}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                            <label for="admin-address" class="block text-sm font-medium text-gray-800 mb-1">Endereço da Loja</label>
+                            <input type="text" id="admin-address" value="${app.adminSettings.address}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full">
                         </div>
                     </div>
                 </div>
-                <div class="p-4 bg-gray-900/50 rounded-lg mt-6">
-                    <h4 class="text-xl font-bold text-purple-400 mb-4">Controle de Funcionamento</h4>
+                <div class="p-4 bg-gray-100 rounded-lg mt-6">
+                    <h4 class="text-xl font-bold text-red-600 mb-4">Controle de Funcionamento</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                         <div>
-                            <h5 class="font-semibold text-gray-300 mb-2">Status da Loja</h5>
+                            <h5 class="font-semibold text-gray-800 mb-2">Status da Loja</h5>
                             <div class="space-y-2">
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_store_status" value="auto" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.storeStatus === 'auto' ? 'checked' : ''}> Automático (por horário)</label>
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_store_status" value="open" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.storeStatus === 'open' ? 'checked' : ''}> Aberto (Manual)</label>
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_store_status" value="closed" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.storeStatus === 'closed' ? 'checked' : ''}> Fechado (Manual)</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_store_status" value="auto" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.storeStatus === 'auto' ? 'checked' : ''}> Automático (por horário)</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_store_status" value="open" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.storeStatus === 'open' ? 'checked' : ''}> Aberto (Manual)</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_store_status" value="closed" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.storeStatus === 'closed' ? 'checked' : ''}> Fechado (Manual)</label>
                             </div>
                         </div>
                         <div>
-                            <h5 class="font-semibold text-gray-300 mb-2">Opções de Pedido</h5>
+                            <h5 class="font-semibold text-gray-800 mb-2">Opções de Pedido</h5>
                              <div class="space-y-2">
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="both" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.deliveryMode === 'both' ? 'checked' : ''}> Delivery e Retirada</label>
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="delivery" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.deliveryMode === 'delivery' ? 'checked' : ''}> Apenas Delivery</label>
-                                <label class="flex items-center p-2 rounded-md hover:bg-gray-700 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="takeout" class="h-4 w-4 mr-2 text-purple-600 focus:ring-purple-500" ${app.adminSettings.deliveryMode === 'takeout' ? 'checked' : ''}> Apenas Retirada</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="both" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.deliveryMode === 'both' ? 'checked' : ''}> Delivery e Retirada</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="delivery" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.deliveryMode === 'delivery' ? 'checked' : ''}> Apenas Delivery</label>
+                                <label class="flex items-center p-2 rounded-md hover:bg-gray-100 cursor-pointer"><input type="radio" name="admin_delivery_mode" value="takeout" class="h-4 w-4 mr-2 text-red-600 focus:ring-red-500" ${app.adminSettings.deliveryMode === 'takeout' ? 'checked' : ''}> Apenas Retirada</label>
                             </div>
                         </div>
                         <div class="md:col-span-2">
-                             <h5 class="font-semibold text-gray-300 mb-2">Horário de Funcionamento (Modo Automático)</h5>
+                             <h5 class="font-semibold text-gray-800 mb-2">Horário de Funcionamento (Modo Automático)</h5>
                              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="sm:col-span-2">
-                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Dias da Semana</h6>
+                                    <h6 class="text-sm font-medium text-gray-600 mb-1">Dias da Semana</h6>
                                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-2 text-sm">
                                         ${daysCheckboxesHTML}
                                     </div>
                                 </div>
                                 <div>
-                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Horário de Abertura/Fechamento</h6>
+                                    <h6 class="text-sm font-medium text-gray-600 mb-1">Horário de Abertura/Fechamento</h6>
                                     <div class="flex items-center gap-2">
-                                        <input type="time" id="admin-opening-time" value="${app.adminSettings.openingTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                        <input type="time" id="admin-opening-time" value="${app.adminSettings.openingTime}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full">
                                         <span>às</span>
-                                        <input type="time" id="admin-closing-time" value="${app.adminSettings.closingTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                        <input type="time" id="admin-closing-time" value="${app.adminSettings.closingTime}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full">
                                     </div>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <h6 class="text-sm font-medium text-gray-400 mb-1">Horário de Início da Entrega</h6>
+                                    <h6 class="text-sm font-medium text-gray-600 mb-1">Horário de Início da Entrega</h6>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label for="admin-weekday-delivery-start-time" class="block text-xs font-medium text-gray-400 mb-1">Dias de Semana (Seg-Mex)</label>
-                                            <input type="time" id="admin-weekday-delivery-start-time" value="${app.adminSettings.weekdayDeliveryStartTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                            <label for="admin-weekday-delivery-start-time" class="block text-xs font-medium text-gray-600 mb-1">Dias de Semana (Seg-Mex)</label>
+                                            <input type="time" id="admin-weekday-delivery-start-time" value="${app.adminSettings.weekdayDeliveryStartTime}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full">
                                         </div>
                                         <div>
-                                            <label for="admin-weekend-delivery-start-time" class="block text-xs font-medium text-gray-400 mb-1">Fins de Semana (Sáb-Dom)</label>
-                                            <input type="time" id="admin-weekend-delivery-start-time" value="${app.adminSettings.weekendDeliveryStartTime}" class="bg-gray-700 p-2 rounded-md border border-gray-600 w-full">
+                                            <label for="admin-weekend-delivery-start-time" class="block text-xs font-medium text-gray-600 mb-1">Fins de Semana (Sáb-Dom)</label>
+                                            <input type="time" id="admin-weekend-delivery-start-time" value="${app.adminSettings.weekendDeliveryStartTime}" class="bg-gray-200 p-2 rounded-md border border-gray-300 w-full">
                                         </div>
                                     </div>
                                 </div>
@@ -1365,25 +1366,25 @@
             app.elements.adminBody.innerHTML += settingsHTML;
 
             // Section for Products (Tamanhos and Combos)
-            let productsHTML = `<div class="p-4 bg-gray-900/50 rounded-lg mt-6"><h4 class="text-xl font-bold text-purple-400 mb-4">Cardápio: Produtos (Tamanhos e Combos)</h4><div id="admin-products-list" class="space-y-3">`;
+            let productsHTML = `<div class="p-4 bg-gray-100 rounded-lg mt-6"><h4 class="text-xl font-bold text-red-600 mb-4">Cardápio: Produtos (Tamanhos e Combos)</h4><div id="admin-products-list" class="space-y-3">`;
             app.products.forEach((product, index) => {
                 const isComboSelectableSize = product.type === 'combo_selectable_size';
                 productsHTML += `
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${product.id}">
-                        <input type="text" value="${product.name}" class="admin-name col-span-2 bg-gray-600 p-2 rounded-md border border-gray-500" placeholder="Nome do Produto">
-                        <input type="number" step="0.01" value="${product.price ? product.price.toFixed(2) : '0.00'}" class="admin-price bg-gray-600 p-2 rounded-md border border-gray-500 ${isComboSelectableSize ? 'hidden' : ''}" placeholder="Preço">
-                        <select class="admin-type bg-gray-600 p-2 rounded-md border border-gray-500">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-200 rounded-md admin-item" data-type="product" data-original-id="${product.id}">
+                        <input type="text" value="${product.name}" class="admin-name col-span-2 bg-gray-300 p-2 rounded-md border border-gray-400" placeholder="Nome do Produto">
+                        <input type="number" step="0.01" value="${product.price ? product.price.toFixed(2) : '0.00'}" class="admin-price bg-gray-300 p-2 rounded-md border border-gray-400 ${isComboSelectableSize ? 'hidden' : ''}" placeholder="Preço">
+                        <select class="admin-type bg-gray-300 p-2 rounded-md border border-gray-400">
                             <option value="base_acai" ${product.type === 'base_acai' ? 'selected' : ''}>Açaí Base</option>
                             <option value="combo_selectable_size" ${product.type === 'combo_selectable_size' ? 'selected' : ''}>Combo (Escolhe Tamanho)</option>
                         </select>
                         <div class="flex items-center justify-between gap-2">
-                            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5" ${product.disabled ? 'checked' : ''}> Bloquear</label>
+                            <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600" ${product.disabled ? 'checked' : ''}> Bloquear</label>
                             <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                         </div>
-                        <textarea class="admin-description col-span-full bg-gray-600 p-2 rounded-md border border-gray-500 ${isComboSelectableSize ? '' : 'hidden'}" placeholder="Descrição (para combos)">${product.description}</textarea>
+                        <textarea class="admin-description col-span-full bg-gray-300 p-2 rounded-md border border-gray-400 ${isComboSelectableSize ? '' : 'hidden'}" placeholder="Descrição (para combos)">${product.description}</textarea>
                     </div>`;
             });
-            productsHTML += `</div><button onclick="app.addAdminItem('product')" class="mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-500 text-sm"><i class="fas fa-plus mr-2"></i>Adicionar Produto</button></div>`;
+            productsHTML += `</div><button onclick="app.addAdminItem('product')" class="mt-4 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 text-sm"><i class="fas fa-plus mr-2"></i>Adicionar Produto</button></div>`;
             app.elements.adminBody.innerHTML += productsHTML;
 
             // Add event listeners for type change to toggle description and price fields
@@ -1404,18 +1405,18 @@
             });
 
             // Section for Toppings
-            let toppingsHTML = `<div class="p-4 bg-gray-900/50 rounded-lg mt-6"><h4 class="text-xl font-bold text-purple-400 mb-4">Cardápio: Complementos</h4>`;
+            let toppingsHTML = `<div class="p-4 bg-gray-100 rounded-lg mt-6"><h4 class="text-xl font-bold text-red-600 mb-4">Cardápio: Complementos</h4>`;
             Object.entries(app.toppings).forEach(([key, category]) => {
-                toppingsHTML += `<div class="mt-4"><h5 class="font-semibold text-gray-300 mb-2">${category.title}</h5><div id="admin-toppings-${key}" class="space-y-2">`;
+                toppingsHTML += `<div class="mt-4"><h5 class="font-semibold text-gray-800 mb-2">${category.title}</h5><div id="admin-toppings-${key}" class="space-y-2">`;
                 (category.items || []).forEach((item, index) => {
                     toppingsHTML += `
-                        <div class="flex items-center gap-3 p-2 bg-gray-700 rounded-md admin-item" data-type="topping" data-category="${key}">
-                            <input type="text" value="${item.name}" class="admin-name flex-grow bg-gray-600 p-2 rounded-md border border-gray-500" placeholder="Nome do Complemento">
-                            <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5" ${item.disabled ? 'checked' : ''}> Bloquear</label>
+                        <div class="flex items-center gap-3 p-2 bg-gray-200 rounded-md admin-item" data-type="topping" data-category="${key}">
+                            <input type="text" value="${item.name}" class="admin-name flex-grow bg-gray-300 p-2 rounded-md border border-gray-400" placeholder="Nome do Complemento">
+                            <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600" ${item.disabled ? 'checked' : ''}> Bloquear</label>
                             <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                         </div>`;
                 });
-                toppingsHTML += `</div><button onclick="app.addAdminItem('topping', '${key}')" class="mt-3 bg-blue-600 text-white font-semibold py-1 px-3 rounded-lg hover:bg-blue-500 text-xs"><i class="fas fa-plus mr-1"></i>Adicionar Complemento</button></div>`;
+                toppingsHTML += `</div><button onclick="app.addAdminItem('topping', '${key}')" class="mt-3 bg-red-600 text-white font-semibold py-1 px-3 rounded-lg hover:bg-red-700 text-xs"><i class="fas fa-plus mr-1"></i>Adicionar Complemento</button></div>`;
             });
             toppingsHTML += `</div>`;
             app.elements.adminBody.innerHTML += toppingsHTML;
@@ -1424,22 +1425,22 @@
         addAdminItem(type, categoryKey = '') {
             const newItemId = Date.now();
             const newItemHTML = (type === 'product')
-                ? `<div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-700 rounded-md admin-item" data-type="product" data-original-id="${newItemId}">
-                       <input type="text" value="Novo Produto" class="admin-name col-span-2 bg-gray-600 p-2 rounded-md border border-gray-500">
-                       <input type="number" step="0.01" value="0.00" class="admin-price bg-gray-600 p-2 rounded-md border border-gray-500">
-                       <select class="admin-type bg-gray-600 p-2 rounded-md border border-gray-500">
+                ? `<div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-center p-2 bg-gray-200 rounded-md admin-item" data-type="product" data-original-id="${newItemId}">
+                       <input type="text" value="Novo Produto" class="admin-name col-span-2 bg-gray-300 p-2 rounded-md border border-gray-400">
+                       <input type="number" step="0.01" value="0.00" class="admin-price bg-gray-300 p-2 rounded-md border border-gray-400">
+                       <select class="admin-type bg-gray-300 p-2 rounded-md border border-gray-400">
                            <option value="base_acai" selected>Açaí Base</option>
                            <option value="combo_selectable_size">Combo (Escolhe Tamanho)</option>
                        </select>
                        <div class="flex items-center justify-between gap-2">
-                           <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5"> Bloquear</label>
+                           <label class="flex items-center gap-2 text-sm cursor-pointer"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600"> Bloquear</label>
                            <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                        </div>
-                       <textarea class="admin-description col-span-full bg-gray-600 p-2 rounded-md border border-gray-500 hidden" placeholder="Descrição (para combos)"></textarea>
+                       <textarea class="admin-description col-span-full bg-gray-300 p-2 rounded-md border border-gray-400 hidden" placeholder="Descrição (para combos)"></textarea>
                    </div>`
-                : `<div class="flex items-center gap-3 p-2 bg-gray-700 rounded-md admin-item" data-type="topping" data-category="${categoryKey}">
-                       <input type="text" value="Novo Complemento" class="admin-name flex-grow bg-gray-600 p-2 rounded-md border border-gray-500">
-                       <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5"> Bloquear</label>
+                : `<div class="flex items-center gap-3 p-2 bg-gray-200 rounded-md admin-item" data-type="topping" data-category="${categoryKey}">
+                       <input type="text" value="Novo Complemento" class="admin-name flex-grow bg-gray-300 p-2 rounded-md border border-gray-400">
+                       <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600"> Bloquear</label>
                        <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                    </div>`;
             
