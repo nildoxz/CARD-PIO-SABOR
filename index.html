@@ -67,6 +67,21 @@
             transform: scale(1);
             pointer-events: auto; /* Enable interaction when visible */
         }
+
+        /* Game specific styles */
+        #game-canvas {
+            background-color: #87CEEB; /* Sky blue */
+            border: 2px solid #333;
+            display: block;
+            width: 100%; /* Make canvas responsive */
+            height: 400px; /* Fixed height, will be adjusted by JS for aspect ratio */
+            border-radius: 10px;
+        }
+        @media (max-width: 640px) {
+            #game-canvas {
+                height: 300px; /* Adjust height for smaller screens */
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -81,6 +96,13 @@
             </p>
         </div>
     </header>
+
+    <!-- Game Banner Section -->
+    <div class="bg-red-600 p-4 text-center shadow-md">
+        <a href="#" onclick="app.game.openGameModal(event)" class="inline-block bg-white text-red-700 font-bold py-3 px-8 rounded-full hover:bg-red-100 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-lg">
+            <i class="fas fa-gamepad mr-2"></i> Clique aqui para jogar Pegue o Açaí!
+        </a>
+    </div>
 
     <div class="container mx-auto p-4 sm:p-8 max-w-4xl">
 
@@ -114,6 +136,7 @@
                     <a href="https://www.instagram.com/sabor_acaiteria/profilecard/?igsh=NjF2ZWMwNHNiNzI0" target="_blank" class="font-semibold text-red-600 hover:underline">@sabor_acaiteria</a>
                 </p>
             </div>
+            <!-- Action Buttons Container -->
             <div class="mt-6">
                  <a href="#" onclick="app.openAdminPanel(event)" class="inline-block bg-gray-200 text-orange-700 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                     <i class="fas fa-user-shield mr-2"></i>Painel do Administrador
@@ -122,11 +145,21 @@
         </footer>
     </div>
 
-    <!-- WhatsApp Floating Button -->
+    <!-- WhatsApp Floating Button (Store) -->
     <a id="whatsapp-link" href="#" target="_blank" class="fixed bottom-5 left-5 z-50">
         <button class="bg-green-500 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-110">
             <i class="fab fa-whatsapp text-3xl"></i>
         </button>
+    </a>
+
+    <!-- WhatsApp Floating Button (Emerson Taxista) -->
+    <a href="https://wa.me/5594981756146" target="_blank" class="fixed top-1/2 -translate-y-1/2 left-5 z-50 group">
+        <button class="bg-blue-600 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition-transform transform hover:scale-110">
+            <i class="fas fa-taxi text-3xl"></i>
+        </button>
+        <span class="absolute left-full ml-3 px-3 py-1 bg-blue-600 text-white text-sm font-bold rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            Chamar Emerson Taxista
+        </span>
     </a>
 
     <!-- Cart Floating Button -->
@@ -350,6 +383,42 @@
             </div>
         </div>
     </div>
+
+    <!-- Game Modal -->
+    <div id="game-modal" class="modal fixed inset-0 bg-black bg-opacity-80 z-[90] hidden items-center justify-center p-4">
+        <div class="bg-white text-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-red-600"><i class="fas fa-gamepad mr-2"></i>Pegue o Açaí!</h3>
+                <button onclick="app.game.closeGameModal()" class="text-gray-500 hover:text-red-500"><i class="fas fa-times text-2xl"></i></button>
+            </div>
+            <div class="p-6 flex-grow flex flex-col items-center justify-center">
+                <canvas id="game-canvas" class="w-full max-w-5xl"></canvas>
+                <div class="mt-4 text-center text-lg font-bold">
+                    Score: <span id="game-score">0</span> | Misses: <span id="game-misses">0</span>
+                </div>
+                <div id="game-message" class="text-red-600 text-xl font-bold mt-2"></div>
+                <div class="mt-6 flex gap-4">
+                    <button id="game-start-btn" onclick="app.game.startGame()" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-all">
+                        <i class="fas fa-play mr-2"></i> Iniciar Jogo
+                    </button>
+                    <button id="game-restart-btn" onclick="app.game.startGame()" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-all hidden">
+                        <i class="fas fa-redo mr-2"></i> Reiniciar
+                    </button>
+                </div>
+                <div class="mt-4 flex justify-center gap-4">
+                    <button id="move-left-btn" class="bg-gray-200 text-gray-800 font-bold py-6 px-16 rounded-lg hover:bg-gray-300 transition-all">
+                        <i class="fas fa-arrow-left text-3xl"></i>
+                    </button>
+                    <button id="move-right-btn" class="bg-gray-200 text-gray-800 font-bold py-6 px-16 rounded-lg hover:bg-gray-300 transition-all">
+                        <i class="fas fa-arrow-right text-3xl"></i>
+                    </button>
+                </div>
+                <p class="text-sm text-gray-600 mt-4 text-center">
+                    Use as setas ← →, os botões abaixo ou deslize na tela para mover a cesta!
+                </p>
+            </div>
+        </div>
+    </div>
     
     <script>
     // --- APP GLOBAL OBJECT ---
@@ -496,6 +565,16 @@
             comboSizeModalTitle: document.getElementById('combo-size-modal-title'),
             comboSizeModalBody: document.getElementById('combo-size-modal-body'),
             selectComboSizeBtn: document.getElementById('select-combo-size-btn'),
+            // Game elements
+            gameModal: document.getElementById('game-modal'),
+            gameCanvas: document.getElementById('game-canvas'),
+            gameScore: document.getElementById('game-score'),
+            gameMisses: document.getElementById('game-misses'),
+            gameMessage: document.getElementById('game-message'),
+            gameStartBtn: document.getElementById('game-start-btn'),
+            gameRestartBtn: document.getElementById('game-restart-btn'),
+            moveLeftBtn: document.getElementById('move-left-btn'),
+            moveRightBtn: document.getElementById('move-right-btn'),
         },
 
         // --- HELPER FUNCTIONS ---
@@ -524,7 +603,9 @@
                 const info = JSON.parse(savedInfo);
                 app.elements.customerNameInput.value = info.name || '';
                 app.elements.customerAddressInput.value = info.address || '';
-                app.elements.neighborhoodSelect.value = info.neighborhood || '';
+                if (app.elements.neighborhoodSelect) { // Check if neighborhoodSelect exists
+                    app.elements.neighborhoodSelect.value = info.neighborhood || '';
+                }
                 if (info.deliveryOption) {
                     const radio = document.querySelector(`input[name="delivery_option"][value="${info.deliveryOption}"]`);
                     if (radio) radio.checked = true;
@@ -671,6 +752,7 @@
                 const isComboWithSelectableSize = product.type === 'combo_selectable_size';
 
                 // Conditional classes for the product card
+                // Card is always visually enabled for browsing, but interactions are controlled by onclick
                 const cardClasses = isDisabled
                     ? "bg-gray-100 border border-gray-200 rounded-xl p-4 text-center transition-all cursor-not-allowed flex flex-col justify-between opacity-60"
                     : "bg-white border border-gray-200 rounded-xl p-4 text-center transition-all hover:shadow-lg hover:border-red-500 cursor-pointer flex flex-col justify-between";
@@ -683,7 +765,7 @@
                 // Conditional text for the button
                 const buttonText = isDisabled ? "Em Breve" : "Montar";
                 
-                // Conditional onclick handler
+                // Conditional onclick handler - now only disabled by product.disabled
                 let onclickHandler;
                 if (isDisabled) {
                     onclickHandler = "";
@@ -833,6 +915,22 @@
                 availableOptions = availableOptions.filter(option => option !== 'delivery');
             }
 
+            // Disable all delivery options if store is closed
+            if (!app.isStoreOpen) {
+                deliveryRadio.disabled = true;
+                app.elements.deliveryOptionDelivery.classList.add('opacity-50', 'cursor-not-allowed');
+                app.elements.deliveryOptionDelivery.querySelector('.radio-title').textContent = 'Delivery (Loja Fechada)';
+                app.elements.deliveryOptionDelivery.querySelector('.text-sm').textContent = 'Pedidos suspensos';
+
+                takeoutRadio.disabled = true;
+                app.elements.deliveryOptionTakeout.classList.add('opacity-50', 'cursor-not-allowed');
+                app.elements.deliveryOptionTakeout.querySelector('.radio-title').textContent = 'Retirar na Loja (Loja Fechada)';
+                app.elements.deliveryOptionTakeout.querySelector('.text-sm').textContent = 'Pedidos suspensos';
+
+                availableOptions = []; // No options available if store is closed
+            }
+
+
             if (availableOptions.length === 0) {
                 deliveryOptionsContainer.classList.add('hidden');
             } else {
@@ -886,10 +984,7 @@
 
         // --- COMBO SIZE SELECTION MODAL ---
         openComboSizeModal(productId) {
-            if (!app.isStoreOpen) {
-                app.showAlert('A loja está fechada e não é possível montar pedidos agora.', 'Loja Fechada', true);
-                return;
-            }
+            // Removed the store open check here to allow browsing and adding to cart
             app.selectedComboProductId = productId; // Store the combo ID
             const product = app.products.find(p => p.id.toString() === productId.toString());
             if (!product) return;
@@ -913,15 +1008,29 @@
                 app.elements.comboSizeModalBody.innerHTML += sizeOptionHtml;
             });
 
-            // Enable/disable continue button based on selection
+            // Enable/disable continue button based on selection AND store status
             app.elements.comboSizeModalBody.querySelectorAll('input[name="combo_size"]').forEach(radio => {
                 radio.addEventListener('change', () => {
-                    app.elements.selectComboSizeBtn.disabled = !document.querySelector('input[name="combo_size"]:checked');
+                    app.elements.selectComboSizeBtn.disabled = !document.querySelector('input[name="combo_size"]:checked') || !app.isStoreOpen;
                 });
             });
 
-            app.elements.selectComboSizeBtn.disabled = true; // Initially disabled
+            // Initially set disabled state based on store status
+            app.elements.selectComboSizeBtn.disabled = !app.isStoreOpen;
+            if (!app.isStoreOpen) {
+                app.elements.selectComboSizeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                app.elements.selectComboSizeBtn.textContent = 'Loja Fechada';
+            } else {
+                app.elements.selectComboSizeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                app.elements.selectComboSizeBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Continuar';
+            }
+
+
             app.elements.selectComboSizeBtn.onclick = () => {
+                if (!app.isStoreOpen) {
+                    app.showAlert('A loja está fechada e não é possível adicionar itens ao carrinho agora.', 'Loja Fechada', true);
+                    return;
+                }
                 const selectedSizeRadio = document.querySelector('input[name="combo_size"]:checked');
                 if (selectedSizeRadio) {
                     const selectedSizeName = selectedSizeRadio.value;
@@ -957,6 +1066,7 @@
 
         // --- ITEM CUSTOMIZATION MODAL ---
         openItemModal(productId, selectedBasePrice, selectedSizeName = '') {
+            // Removed the store open check here to allow browsing and adding to cart
             const product = app.products.find(p => p.id.toString() === productId.toString());
             if (!product) return;
             
@@ -1013,6 +1123,17 @@
 
             app.updateModalItemTotal();
             app.openModal(app.elements.itemModal);
+
+            // Disable "Adicionar ao Carrinho" button if store is closed
+            if (!app.isStoreOpen) {
+                app.elements.addToCartBtn.disabled = true;
+                app.elements.addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                app.elements.addToCartBtn.textContent = 'Loja Fechada';
+            } else {
+                app.elements.addToCartBtn.disabled = false;
+                app.elements.addToCartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                app.elements.addToCartBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Adicionar ao Carrinho';
+            }
         },
 
         closeItemModal() {
@@ -1412,7 +1533,7 @@
                     toppingsHTML += `
                         <div class="flex items-center gap-3 p-2 bg-gray-200 rounded-md admin-item" data-type="topping" data-category="${key}">
                             <input type="text" value="${item.name}" class="admin-name flex-grow bg-gray-300 p-2 rounded-md border border-gray-400" placeholder="Nome do Complemento">
-                            <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600" ${item.disabled ? 'checked' : ''}> Bloquear</label>
+                            <label class="flex items-center gap-2 text-sm cursor-pointer whitespace-nowrap"><input type="checkbox" class="admin-disabled h-5 w-5 text-red-600"> Bloquear</label>
                             <button onclick="app.removeAdminItem(this)" class="text-red-500 hover:text-red-400"><i class="fas fa-trash-alt"></i></button>
                         </div>`;
                 });
@@ -1570,6 +1691,285 @@
             );
         },
 
+        // --- GAME LOGIC ---
+        game: {
+            canvas: null,
+            ctx: null,
+            player: {},
+            fallingItems: [],
+            score: 0,
+            misses: 0,
+            maxMisses: 5,
+            gameOver: false,
+            gameStarted: false,
+            animationFrameId: null,
+            itemSpawnInterval: null,
+            lastTouchX: null, // For mobile swipe
+            baseItemSpeed: 1.5, // Initial base speed for falling items
+            basePlayerSpeed: 10, // Initial base speed for player movement
+            currentSpeedMultiplier: 1, // Multiplier for game speed
+
+            init() {
+                this.canvas = app.elements.gameCanvas;
+                this.ctx = this.canvas.getContext('2d');
+                this.resizeCanvas(); // Set initial canvas size
+                window.addEventListener('resize', () => this.resizeCanvas()); // Make canvas responsive
+
+                // Player properties
+                this.player = {
+                    width: 80,
+                    height: 60,
+                    x: (this.canvas.width / 2) - 40,
+                    y: this.canvas.height - 70,
+                    speed: this.basePlayerSpeed, // Initialize with base speed
+                    dx: 0 // Change in x-direction
+                };
+
+                this.resetGame();
+                this.addEventListeners();
+            },
+
+            resizeCanvas() {
+                // Adjust canvas width to fit its container and maintain aspect ratio
+                const containerWidth = this.canvas.parentElement.clientWidth;
+                // Increased max width for the canvas
+                this.canvas.width = Math.min(containerWidth, 900); 
+                // Maintain 3:2 aspect ratio (original 600x400)
+                this.canvas.height = this.canvas.width * (2 / 3); 
+                
+                // Readjust player position if canvas size changes
+                if (this.player.x) { // Check if player is initialized
+                    this.player.x = Math.max(0, Math.min(this.canvas.width - this.player.width, this.player.x));
+                    this.player.y = this.canvas.height - 70;
+                }
+                // Redraw all elements if game is active to adapt to new size
+                if (this.gameStarted) {
+                    this.draw(); 
+                }
+            },
+
+            resetGame() {
+                this.score = 0;
+                this.misses = 0;
+                this.fallingItems = [];
+                this.gameOver = false;
+                this.gameStarted = false;
+                this.currentSpeedMultiplier = 1; // Reset speed multiplier
+                this.player.speed = this.basePlayerSpeed; // Reset player speed
+                this.player.x = (this.canvas.width / 2) - (this.player.width / 2);
+                this.player.dx = 0;
+
+                app.elements.gameScore.textContent = this.score;
+                app.elements.gameMisses.textContent = this.misses;
+                app.elements.gameMessage.textContent = '';
+                app.elements.gameStartBtn.classList.remove('hidden');
+                app.elements.gameRestartBtn.classList.add('hidden');
+
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                }
+                if (this.itemSpawnInterval) {
+                    clearInterval(this.itemSpawnInterval);
+                }
+                this.draw(); // Draw initial state
+            },
+
+            startGame() {
+                this.resetGame();
+                this.gameStarted = true;
+                app.elements.gameStartBtn.classList.add('hidden');
+                app.elements.gameRestartBtn.classList.remove('hidden'); // Show restart button after starting
+
+                this.itemSpawnInterval = setInterval(() => this.spawnItem(), 1000); // Spawn item every 1 second
+                this.gameLoop();
+            },
+
+            endGame() {
+                this.gameOver = true;
+                this.gameStarted = false;
+                cancelAnimationFrame(this.animationFrameId);
+                clearInterval(this.itemSpawnInterval);
+                app.elements.gameMessage.textContent = `Fim de Jogo! Você pegou ${this.score} açaís!`;
+                app.elements.gameRestartBtn.classList.remove('hidden');
+            },
+
+            spawnItem() {
+                const itemSize = Math.random() * (25 - 15) + 15; // Random size between 15 and 25
+                this.fallingItems.push({
+                    x: Math.random() * (this.canvas.width - itemSize),
+                    y: 0,
+                    size: itemSize,
+                    // Apply current speed multiplier to new items
+                    speed: (Math.random() * (3 - 1) + 1) * this.currentSpeedMultiplier * this.baseItemSpeed, 
+                    color: '#4B0082' // Deep Indigo (açaí color)
+                });
+            },
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // Clear canvas
+
+                // Draw player (basket) - More visually appealing
+                this.ctx.fillStyle = '#A0522D'; // Sienna brown for basket body
+                this.ctx.beginPath();
+                // Bottom rectangle with rounded corners
+                this.ctx.roundRect(this.player.x, this.player.y + 10, this.player.width, this.player.height - 10, [5, 5, 5, 5]);
+                this.ctx.fill();
+
+                // Top arc for the opening
+                this.ctx.fillStyle = '#D2B48C'; // Tan for basket rim
+                this.ctx.beginPath();
+                this.ctx.ellipse(this.player.x + this.player.width / 2, this.player.y + 10, this.player.width / 2, 15, 0, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                // Draw falling items (açaí berries)
+                this.fallingItems.forEach(item => {
+                    this.ctx.fillStyle = item.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(item.x + item.size / 2, item.y + item.size / 2, item.size / 2, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    // Add a stroke for better visibility
+                    this.ctx.strokeStyle = '#000000'; // Black border
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                });
+            },
+
+            update() {
+                if (this.gameOver) return;
+
+                // Update player position
+                this.player.x += this.player.dx;
+                // Keep player within canvas bounds
+                if (this.player.x < 0) this.player.x = 0;
+                if (this.player.x + this.player.width > this.canvas.width) this.player.x = this.canvas.width - this.player.width;
+
+                // Update falling items
+                this.fallingItems.forEach((item, index) => {
+                    item.y += item.speed;
+
+                    // Collision detection with player (basket opening)
+                    // Check if the item's bottom is within the basket's top arc Y range
+                    // And if the item's horizontal position overlaps with the basket's horizontal range
+                    if (item.y + item.size > this.player.y &&
+                        item.y < this.player.y + this.player.height && // Ensure item is not past the bottom of the basket
+                        item.x < this.player.x + this.player.width &&
+                        item.x + item.size > this.player.x) {
+                        this.score++;
+                        app.elements.gameScore.textContent = this.score;
+
+                        // Check for speed increase every 20 points
+                        if (this.score > 0 && this.score % 20 === 0) {
+                            this.currentSpeedMultiplier *= 1.15; // Increase by 15%
+                            this.player.speed = this.basePlayerSpeed * this.currentSpeedMultiplier; // Update player speed
+                            // Accelerate all currently falling items
+                            this.fallingItems.forEach(fallingItem => {
+                                fallingItem.speed *= 1.15;
+                            });
+                            app.elements.gameMessage.textContent = `Velocidade Aumentada! (x${this.currentSpeedMultiplier.toFixed(2)})`;
+                            setTimeout(() => app.elements.gameMessage.textContent = '', 1500); // Clear message after 1.5s
+                        }
+
+                        this.fallingItems.splice(index, 1); // Remove caught item
+                    } else if (item.y + item.size > this.canvas.height) {
+                        this.misses++;
+                        app.elements.gameMisses.textContent = this.misses;
+                        this.fallingItems.splice(index, 1); // Remove missed item
+                        if (this.misses >= this.maxMisses) {
+                            this.endGame();
+                        }
+                    }
+                });
+            },
+
+            gameLoop() {
+                this.update();
+                this.draw();
+                this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
+            },
+
+            addEventListeners() {
+                // Keyboard controls for desktop
+                document.addEventListener('keydown', (e) => {
+                    if (app.elements.gameModal.classList.contains('flex') && this.gameStarted) {
+                        if (e.key === 'ArrowLeft') {
+                            this.player.dx = -this.player.speed;
+                        } else if (e.key === 'ArrowRight') {
+                            this.player.dx = this.player.speed;
+                        }
+                    }
+                });
+
+                document.addEventListener('keyup', (e) => {
+                    if (app.elements.gameModal.classList.contains('flex') && this.gameStarted) {
+                        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                            this.player.dx = 0;
+                        }
+                    }
+                });
+
+                // Touch controls for mobile (swipe)
+                this.canvas.addEventListener('touchstart', (e) => {
+                    if (this.gameStarted) {
+                        this.lastTouchX = e.touches[0].clientX;
+                    }
+                });
+
+                this.canvas.addEventListener('touchmove', (e) => {
+                    if (this.gameStarted && this.lastTouchX !== null) {
+                        const currentTouchX = e.touches[0].clientX;
+                        const deltaX = currentTouchX - this.lastTouchX;
+                        
+                        // Scale deltaX based on canvas width to make movement consistent across devices
+                        this.player.dx = (deltaX / this.canvas.width) * this.player.speed * 5; // Adjust multiplier as needed
+                        this.lastTouchX = currentTouchX;
+                    }
+                });
+
+                this.canvas.addEventListener('touchend', () => {
+                    this.player.dx = 0;
+                    this.lastTouchX = null;
+                });
+
+                // Button controls (mousedown/mouseup for desktop, touchstart/touchend for mobile)
+                const setPlayerDx = (direction) => {
+                    if (this.gameStarted) {
+                        this.player.dx = direction * this.player.speed;
+                    }
+                };
+
+                const stopPlayerDx = () => {
+                    if (this.gameStarted) {
+                        this.player.dx = 0;
+                    }
+                };
+
+                // Left Button
+                app.elements.moveLeftBtn.addEventListener('mousedown', () => setPlayerDx(-1));
+                app.elements.moveLeftBtn.addEventListener('mouseup', stopPlayerDx);
+                app.elements.moveLeftBtn.addEventListener('mouseleave', stopPlayerDx); // Stop if mouse leaves button
+                app.elements.moveLeftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); setPlayerDx(-1); }, { passive: false });
+                app.elements.moveLeftBtn.addEventListener('touchend', stopPlayerDx);
+
+                // Right Button
+                app.elements.moveRightBtn.addEventListener('mousedown', () => setPlayerDx(1));
+                app.elements.moveRightBtn.addEventListener('mouseup', stopPlayerDx);
+                app.elements.moveRightBtn.addEventListener('mouseleave', stopPlayerDx); // Stop if mouse leaves button
+                app.elements.moveRightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); setPlayerDx(1); }, { passive: false });
+                app.elements.moveRightBtn.addEventListener('touchend', stopPlayerDx);
+            },
+
+            openGameModal(event) {
+                if (event) event.preventDefault(); // Prevent default link behavior
+                app.openModal(app.elements.gameModal);
+                this.init(); // Initialize game when modal opens
+            },
+
+            closeGameModal() {
+                this.endGame(); // Stop game when modal closes
+                app.closeModal(app.elements.gameModal);
+            }
+        },
+
         // --- INITIALIZATION ---
         initializeApp() {
             app.loadLocalData();
@@ -1588,6 +1988,11 @@
             // Event listeners
             // Modified to explicitly close item modal after adding to cart
             app.elements.addToCartBtn.addEventListener('click', () => {
+                // Only add to cart if store is open
+                if (!app.isStoreOpen) {
+                    app.showAlert('A loja está fechada e não é possível adicionar itens ao carrinho agora.', 'Loja Fechada', true);
+                    return;
+                }
                 app.addToCart();
                 app.closeItemModal(); 
             });
